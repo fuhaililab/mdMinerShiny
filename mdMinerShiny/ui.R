@@ -1,5 +1,9 @@
 shinyUI(fluidPage(
+<<<<<<< HEAD
   titlePanel("MD Miner"),
+=======
+  titlePanel("MD-Miner (Medical Drug Miner) @ BioMedical Informatics - The Ohio State University"),
+>>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
   sidebarLayout(
     sidebarPanel(
       helpText("Please choose a cancer type and a data type to download corresponding data."),
@@ -19,4 +23,9 @@ shinyUI(fluidPage(
       tableOutput("table")
     )
   )
+<<<<<<< HEAD
 ))
+=======
+))
+
+>>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
