@@ -1,7 +1,5 @@
 library(shiny);
-
 source("./Module_A.r");
-
 shinyServer(function(input, output) {
 	RNASeq <- reactive({
 		result = NULL;
@@ -25,16 +23,7 @@ shinyServer(function(input, output) {
 			# 	}
 			# }		
 
-			# for (j in 1:3) {
-			# 	x = read.table(normalizedResultsURL[j]);
-			# 	if (is.null(result)) {
-			# 		result = x;
-			# 	} else {
-			# 		result = cbind(result, x[, 2]);
-			# 	}
-			# }
-
-			for (j in 1:length(normalizedResultsURL)) {
+			for (j in 1:3) {
 				x = read.table(normalizedResultsURL[j]);
 				if (is.null(result)) {
 					result = x;
@@ -42,6 +31,15 @@ shinyServer(function(input, output) {
 					result = cbind(result, x[, 2]);
 				}
 			}
+
+			# for (j in 1:length(normalizedResultsURL)) {
+			# 	x = read.table(normalizedResultsURL[j]);
+			# 	if (is.null(result)) {
+			# 		result = x;
+			# 	} else {
+			# 		result = cbind(result, x[, 2]);
+			# 	}
+			# }
 
 			return(result);				
 		}
@@ -52,6 +50,10 @@ shinyServer(function(input, output) {
 		paste("You are choosing the", input$dataType, "of", input$cancerType)
 	})
 
+	output$table <- renderTable({
+		RNASeq()
+	})
+
 	output$downloadData <- downloadHandler(
 		filename = function() {
 			paste(input$cancerType, '_', input$dataType, '.txt', sep='')
@@ -60,4 +62,5 @@ shinyServer(function(input, output) {
 			write.table(RNASeq(), file, quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
 		}
 	)
+
 })

@@ -1,9 +1,9 @@
 shinyUI(fluidPage(
-<<<<<<< HEAD
+# <<<<<<< HEAD
   titlePanel("MD Miner"),
-=======
+# =======
   titlePanel("MD-Miner (Medical Drug Miner) @ BioMedical Informatics - The Ohio State University"),
->>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
+# >>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
   sidebarLayout(
     sidebarPanel(
       helpText("Please choose a cancer type and a data type to download corresponding data."),
@@ -16,16 +16,15 @@ shinyUI(fluidPage(
       selectInput("dataType", "Choose A Data Type:", 
                   choices = c("RNA-seq", "DNA methylation", "DNA copy number", 
                     "Protein expression", "miRNA-seq")),
-      actionButton("action", label="Download")
+      downloadButton("downloadData", label="Download"),
+      actionButton("action", label="Display")
     ),
     mainPanel(
       textOutput("text"),
       tableOutput("table")
     )
   )
-<<<<<<< HEAD
+# <<<<<<< HEAD
 ))
-=======
-))
-
->>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
+# =======
+# >>>>>>> 511bd2e17b139e94da73ddfeb317231758b3c942
