@@ -50,9 +50,7 @@ shinyServer(function(input, output) {
 		paste("You are choosing the", input$dataType, "of", input$cancerType)
 	})
 
-	output$table <- renderTable({
-		RNASeq()
-	})
+	output$table <- renderTable(RNASeq(), quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
 
 	output$downloadData <- downloadHandler(
 		filename = function() {
