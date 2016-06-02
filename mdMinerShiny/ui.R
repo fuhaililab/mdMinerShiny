@@ -16,8 +16,7 @@ shinyUI(fluidPage(
       selectInput("dataType", "Choose A Data Type:", 
                   choices = c("RNA-seq", "DNA methylation", "DNA copy number", 
                     "Protein expression", "miRNA-seq")),
-      downloadButton("downloadData", label="Download"),
-      actionButton("action", label="Display")
+      downloadButton("downloadData", label="Download")
     ),
     mainPanel(
       textOutput("text"),

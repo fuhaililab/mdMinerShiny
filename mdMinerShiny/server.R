@@ -14,32 +14,19 @@ shinyServer(function(input, output) {
 			fileURL = subURLcontent$file_url;
 			normalizedResultsURL = grep("rsem.genes.normalized_results", fileURL, value = TRUE);
 
-			# for (j in 1:1) {
-			# 	x = read.table(normalizedResultsURL[j]);
-			# 	if (is.null(result)) {
-			# 		result = x;
-			# 	} else {
-			# 		result = cbind(result, x[, 2]);
-			# 	}
-			# }		
-
-			for (j in 1:3) {
-				x = read.table(normalizedResultsURL[j]);
-				if (is.null(result)) {
-					result = x;
-				} else {
-					result = cbind(result, x[, 2]);
+			withProgress(message = 'Collecting samples', {
+				n = 50;
+				# n = length(normalizedResultsURL);
+				for (j in 1:n) {
+					incProgress(1/n, detail = paste(j, '/', n))
+					x = read.table(normalizedResultsURL[j]);
+					if (is.null(result)) {
+						result = x;
+					} else {
+						result = cbind(result, x[, 2]);
+					}
 				}
-			}
-
-			# for (j in 1:length(normalizedResultsURL)) {
-			# 	x = read.table(normalizedResultsURL[j]);
-			# 	if (is.null(result)) {
-			# 		result = x;
-			# 	} else {
-			# 		result = cbind(result, x[, 2]);
-			# 	}
-			# }
+			})
 
 			return(result);				
 		}
@@ -49,8 +36,6 @@ shinyServer(function(input, output) {
 	output$text <- renderText({
 		paste("You are choosing the", input$dataType, "of", input$cancerType)
 	})
-
-	output$table <- renderTable(RNASeq(), quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
 
 	output$downloadData <- downloadHandler(
 		filename = function() {
