@@ -1,3 +1,6 @@
+library(networkD3);
+data(MisLinks)
+data(MisNodes)
 shinyUI(fluidPage(
 # <<<<<<< HEAD
   titlePanel("MD Miner"),
@@ -16,11 +19,12 @@ shinyUI(fluidPage(
       selectInput("dataType", "Choose A Data Type:", 
                   choices = c("RNA-seq", "DNA methylation", "DNA copy number", 
                     "Protein expression", "miRNA-seq")),
-      downloadButton("downloadData", label="Download")
+      downloadButton("downloadData", label="Download"),
+      helpText("Data will be stored in your /Downloads file")
     ),
     mainPanel(
       textOutput("text"),
-      tableOutput("table")
+      forceNetworkOutput("force")
     )
   )
 # <<<<<<< HEAD
