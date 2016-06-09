@@ -52,10 +52,28 @@ shinyServer(function(input, output) {
 	)
 
 	output$force <- renderForceNetwork({
+		x = read.table("example.txt");
+		sourceName = x[, 1];
+		targetName = x[, 2];
+		name = unique(c(as.character(sourceName), as.character(targetName)));
+		group = numeric(length(name)) + 1;
+		size = numeric(length(name)) + 1;
+		MisNodes = data.frame(name, group, size);
+
+		source = c(match(sourceName[1], name) - 1);
+		target = c(match(targetName[1], name) - 1);
+		for (i in 2:length(sourceName)) {
+			source = c(source, match(sourceName[i], name) - 1);
+			target = c(target, match(targetName[i], name) - 1);
+		}
+
+		value = numeric(length(source)) + 1;
+		MisLinks = data.frame(source, target, value);
+
 		forceNetwork(Links = MisLinks, Nodes = MisNodes,
 		            Source = "source", Target = "target",
 		            Value = "value", NodeID = "name",
-		            Group = "group", opacity = 1)
+		            Group = "group", opacity = 1);
 	})
 
 })
