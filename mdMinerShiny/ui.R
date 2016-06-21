@@ -1,7 +1,7 @@
 library(networkD3);
 data(MisLinks)
 data(MisNodes)
-shinyUI(navbarPage("mdMinerShiny",
+shinyUI(navbarPage("MD-Miner Shiny",
 
   tabPanel("Download Data",
     titlePanel("Download Data You Need from TCGA"),
