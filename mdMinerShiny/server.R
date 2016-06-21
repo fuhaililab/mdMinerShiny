@@ -73,7 +73,7 @@ shinyServer(function(input, output) {
 		forceNetwork(Links = MisLinks, Nodes = MisNodes,
 		            Source = "source", Target = "target",
 		            Value = "value", NodeID = "name",
-		            Group = "group", opacity = 1);
+		            Group = "group", opacity = 1, opacityNoHover = 1);
 	})
 
 })
