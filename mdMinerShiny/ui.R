@@ -2,10 +2,11 @@ library(networkD3);
 data(MisLinks)
 data(MisNodes)
 shinyUI(navbarPage("mdMinerShiny",
-  tabPanel("Download Data",
-    sidebarPanel(
-      helpText("Please choose a cancer type and a data type to download corresponding data."),
 
+  tabPanel("Download Data",
+    titlePanel("Download Data You Need from TCGA"),
+    sidebarPanel(
+      helpText("Please choose the type of cancer and data to download."),
       selectizeInput("cancerType", "Choose Cancer Types:", 
                   choices = c("LAML", "ACC", "BLCA", "LGG", "BRCA", "CESC", "CHOL", "COAD",
                    "ESCA", "FPPP", "GBM", "HNSC", "KICH", "KIRC", "KIRP", "LIHC", "LUAD", 
@@ -38,5 +39,7 @@ shinyUI(navbarPage("mdMinerShiny",
     )
   ),
 
-  tabPanel("Drug Suggestion")
+  tabPanel("Drug Suggestion", 
+    titlePanel("Predict the best drug according to genetic data")
+  )
 ))
