@@ -57,7 +57,11 @@ shinyServer(function(input, output) {
 		targetName = x[, 2];
 		name = unique(c(as.character(sourceName), as.character(targetName)));
 		group = numeric(length(name)) + 1;
-		size = numeric(length(name)) + 1;
+		group[match(('CREBBP'), name)] = 2;
+		group[match(('ATF4'), name)] = 3;
+
+		size = numeric(length(name));
+		size[match(('ATF4'), name)] = 15;
 		MisNodes = data.frame(name, group, size);
 
 		source = c(match(sourceName[1], name) - 1);
@@ -70,10 +74,9 @@ shinyServer(function(input, output) {
 		value = numeric(length(source)) + 1;
 		MisLinks = data.frame(source, target, value);
 
-		forceNetwork(Links = MisLinks, Nodes = MisNodes,
-		            Source = "source", Target = "target",
-		            Value = "value", NodeID = "name",
-		            Group = "group", opacity = 1, opacityNoHover = 1);
+		forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", Target = "target",
+		            Value = "value", NodeID = "name", Nodesize = "size", Group = "group", colourScale = JS("d3.scale.category10()"),
+		            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);
 	})
 
 })
