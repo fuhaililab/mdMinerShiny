@@ -3,6 +3,8 @@ library(networkD3)
 data(MisLinks)
 data(MisNodes)
 
+shiny.maxRequestSize=30*1024^2
+
 source("./Module_A.r");
 shinyServer(function(input, output) {
 	RNASeq <- reactive({
@@ -52,7 +54,8 @@ shinyServer(function(input, output) {
 	)
 
 	output$force <- renderForceNetwork({
-		x = read.table("example.txt");
+	  inFile <- input$file1
+		x = read.table(inFile$datapath);
 		sourceName = x[, 1];
 		targetName = x[, 2];
 		name = unique(c(as.character(sourceName), as.character(targetName)));
