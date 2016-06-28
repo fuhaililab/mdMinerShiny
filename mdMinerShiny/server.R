@@ -58,7 +58,10 @@ shinyServer(function(input, output) {
 	    inFile <- input$file1;
 	    if (!is.null(inFile)) {	    	
 			foldChangePC = read.table(inFile$datapath);
-			x = getPersonalNet1(as.character(foldChangePC[, 1]), as.numeric(foldChangePC[, 2]));
+			foldChangePC = as.matrix(foldChangePC)
+			gSym = as.character(foldChangePC[, 1])
+			fc = as.numeric(foldChangePC[, 2])
+			x = getPersonalNet1(fc, gSym);
 			
 			sourceName = x[, 1];
 			targetName = x[, 2];

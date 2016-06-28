@@ -1,7 +1,7 @@
 # 1) install R packages
-# library(org.Hs.eg.db)
-# library(graphite)
-# library(igraph)
+library(org.Hs.eg.db)
+library(graphite)
+library(igraph)
 
 # 2) read in the fold change data
 # f1 <- c("path to fold change file/file name")  # fiel name: for example: f1 <- c("./foldchangePc3.txt")
@@ -12,9 +12,11 @@
 # fc <- as.numeric(x1[,2])  # get the value of fold change
 
 getPersonalNet1 <- function(fc, gSym){
+	
+	options(warn = -1)
 	library(igraph)
 
-	eKegg <- getKeggNet1()
+	eKegg <- getKeggNet1(gSym)
 	eKegg <- eKegg[,c(1,2)]  #only source/target information
 	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges
 
@@ -69,10 +71,11 @@ linkNodes1 <- function(gTmp, recTmp, tfTmp){
 			}
 		}
 	}
+	pathTmp <- pathTmp[-1,]
 	return(pathTmp)
 }
 
-getKeggNet1 <- function(){
+getKeggNet1 <- function(gSym1){
 	library(org.Hs.eg.db)
 	library(graphite)	
 	
@@ -93,8 +96,8 @@ getKeggNet1 <- function(){
 		
 		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed
 		if (length(e2) > 0){
-			dim(y) <- c(length(y)/4, 4)
-			y=y[,c(2:1,3:4)]	
+			dim(e2) <- c(length(e2)/4, 4)
+			e2=e2[,c(2:1,3:4)]	
 			e1 <- rbind(e1, e2)
 		}
 		eSymbol[[i]] <- e1[!duplicated(e1),]

@@ -5,5 +5,5 @@
 wDir <- c('/Users/li150/FHLosu/gitRepository1/')
 setwd(wDir)
 library(shiny)
-runApp('~/mdMinerShiny')
+runApp('./mdMinerShiny')
 
