@@ -25,7 +25,7 @@ shinyUI(navbarPage("MD-Miner Shiny",
 
     sidebarLayout(
       sidebarPanel(
-        fileInput('file1', 'Choose Patient Data File', 
+        fileInput('file1', 'Choose Patient Fold Change Data File', 
           accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv'))
       ),
     
