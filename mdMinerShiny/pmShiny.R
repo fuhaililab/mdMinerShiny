@@ -11,7 +11,38 @@ library(igraph)
 # gSym <- as.character(x1[,1])  # get the gene Symbols
 # fc <- as.numeric(x1[,2])  # get the value of fold change
 
-getPersonalNet1 <- function(fc, gSym){
+#fDrugMoa <- c('./drugMoaNets/')
+getRepositionDrugs <- function(netPatient, n1){
+	#dir1 <- c("/Users/li150/FHLosu/Projects/lincs/drugMoaNets/")
+	dir1 <- c("./drugMoaNets/")
+	drugList <- dir(dir1)
+	drugName <- gsub('.txt', '', drugList)
+	nDrug <- length(drugList)
+
+	ds <- rep(-1.0, nDrug)
+	for (i in 1:nDrug){
+		netDrug <- read.table(paste(dir1, drugList[i], sep='/'), header=F, sep='\t')
+		ds[i] <- getDrugRepositionScore(netPatient, netDrug)
+	}
+	idx <- order(ds, decreasing=T)
+	ds <- ds[idx]
+	drugName <- drugName[idx]
+
+	n1 <- min(n1, nDrug)
+	dat <- cbind(drugName[1:n1], ds[1:n1])
+
+}
+
+getDrugRepositionScore <- function(netPatient, netDrug){
+	node0 <- union(netPatient[,1], netPatient[,2])
+	node1 <- union(netDrug[,1], netDrug[,2])
+	s <- length(intersect(node0, node1))/length(node0)
+
+	return(s)
+}
+
+
+getPersonalNet2 <- function(fc, gSym, rootGenes){
 	
 	options(warn = -1)
 	library(igraph)
@@ -26,6 +57,37 @@ getPersonalNet1 <- function(fc, gSym){
 	tf1 <- nKegg[nKegg %in% tf1]
 	tf1 <- tf1[3]
 
+	#get the root genes:
+	# rootGenes <- read.table('./rootGenes.txt', header=F)
+	# rootGenes <- as.character(rootGenes[[1]])
+	rootGenes <- nKegg[nKegg %in% rootGenes]
+
+	if (length(rootGenes) < 1){
+		net1 <- matrix('test', 2,2)
+		return(net1)
+	}
+	# get the KEGG background network
+	net1 <- linkNodes1(gTmp, rootGenes, tf1)  #net1 is the network: source (1 column) and target node (2 column)
+
+	# display the net1
+	return(net1)
+}
+
+
+getPersonalNet1 <- function(fc, gSym){
+	
+	options(warn = -1)
+	library(igraph)
+
+	eKegg <- getKeggNet1(gSym)
+	eKegg <- eKegg[,c(1,2)]  #only source/target information
+	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges
+
+	nKegg <- union(eKegg[,1], eKegg[,2]) 
+
+	tf1 <- getActiveTF3(fc, gSym)
+	tf1 <- nKegg[nKegg %in% tf1]
+	tf1 <- tf1[3]
 
 	#get the root genes:
 	rootGenes <- read.table('./rootGenes.txt', header=F)
