@@ -31,8 +31,8 @@ shinyUI(fluidPage(theme = "bootstrap.css",
             forceNetworkOutput("geneforce")
           ),
         fixedRow(
-          box(title= tags$h5("Patient and Drug Merged Netowrk"), solidHeader= TRUE, status = "primary"),
-          box(title= tags$h5("Survival Analysis"), solidHeader= TRUE, status = "primary")
+          box(title= tags$h5("Patient and Drug Merged Netowrk"), solidHeader= TRUE, background="light-blue"),
+          box(title= tags$h5("Survival Analysis"), solidHeader= TRUE, background="light-blue")
         ),
         fixedRow(
           column(6,
