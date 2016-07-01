@@ -1,45 +1,48 @@
-library(networkD3);
-data(MisLinks)
-data(MisNodes)
-shinyUI(navbarPage("MD-Miner Shiny",
+library(shiny)
+library(networkD3)
+library(shinydashboard)
 
-  tabPanel("Download Data",
-    titlePanel("Download Data You Need from TCGA"),
-    sidebarPanel(
-      helpText("Please choose the type of cancer and data to download."),
-      selectizeInput("cancerType", "Choose Cancer Types:", 
-                  choices = c("LAML", "ACC", "BLCA", "LGG", "BRCA", "CESC", "CHOL", "COAD",
-                   "ESCA", "FPPP", "GBM", "HNSC", "KICH", "KIRC", "KIRP", "LIHC", "LUAD", 
-                   "LUSC", "DLBC", "MESO", "OV", "PAAD", "PCPG", "PRAD", "READ", "SARC", 
-                   "SKCM", "STAD", "TGCT", "THYM", "THCA", "UCS", "UCEG", "UVM"), multiple = TRUE),
-      selectInput("dataType", "Choose A Data Type:", 
-                  choices = c("RNA-seq", "DNA methylation", "DNA copy number", 
-                    "Protein expression", "miRNA-seq", "Clinical"), multiple = TRUE),
-      downloadButton("downloadData", label="Download"),
-      helpText("Data will be stored in your /Downloads file")
-    )
-  ),
-
-  tabPanel("Comprehensive Analysis",
-    titlePanel("Analyze patient data with existing samples"),
-
-    sidebarLayout(
-      sidebarPanel(
-        fileInput('file1', 'Choose Patient Fold Change Data File', 
-          accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv'))
-      ),
+shinyUI(fluidPage(theme = "bootstrap.css", 
+    tags$style(type="text/css",
+      "label {font-size: 12px;}",
+      ".recalculating {opacity: 1.0;}"),
     
-      mainPanel(
-        tabsetPanel(
-          tabPanel("Network Display", forceNetworkOutput("force")), 
-          tabPanel("Cluster Analysis", plotOutput("plot")), 
-          tabPanel("Survival Prediction", tableOutput("table"))
+    dashboardPage(skin = "red",
+      dashboardHeader(
+        title = tags$h4("MdMiner: The Ohio State University"),
+        titleWidth= 450
+      ),
+      dashboardSidebar(
+        fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
+                  accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
+        tags$h5("Top Ten Drug Suggestions") #,
+        #tableOutput("table")
+      ),
+      dashboardBody( 
+        fluidRow(
+          box(title= tags$h5("Patient Information and Gene Network"), solidHeader= TRUE, background="light-blue"),
+          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, background="light-blue")
+          ),
+        fixedRow(
+          column(6,
+            forceNetworkOutput("force")
+          ),
+          column(6,
+            forceNetworkOutput("geneforce")
+          ),
+        fixedRow(
+          box(title= tags$h5("Patient and Drug Merged Netowrk"), solidHeader= TRUE, status = "primary"),
+          box(title= tags$h5("Survival Analysis"), solidHeader= TRUE, status = "primary")
+        ),
+        fixedRow(
+          column(6,
+                 forceNetworkOutput("mergeforce")
+          ),
+          column(6,
+                 plotOutput("survival")
+          )
         )
       )
     )
-  ),
-
-  tabPanel("Drug Suggestion", 
-    titlePanel("Predict the best drug according to genetic data")
   )
 ))
