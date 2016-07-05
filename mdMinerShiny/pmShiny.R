@@ -10,13 +10,12 @@ if (1 == 2){
 	fc <- as.numeric(x1[,2])  # get the value of fold change
 	x = getPersonalNet1(fc, gSym);
 
-
 }
 
 # 1) install R packages
 library(org.Hs.eg.db)
 library(graphite)
-library(igraph)
+#library(igraph)
 
 # 2) read in the fold change data
 # f1 <- c("path to fold change file/file name")  # fiel name: for example: 
@@ -158,7 +157,7 @@ getKeggNet1 <- function(gSym1){
 	eSymbol <- list()
 	
 	for (i in 1:length(kegg)){
-		print(i)
+		# print(i)
 		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'
 		e1 <- as.matrix(kegg[[i]]@edges)
 		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]
