@@ -51,6 +51,7 @@ getDrugRepositionScore <- function(netPatient, netDrug){
 }
 
 
+
 getPersonalNet2 <- function(fc, gSym, rootGenes){
 	
 	options(warn = -1)
@@ -111,7 +112,7 @@ getPersonalNet1 <- function(fc, gSym){
 }
 
 linkNodes1 <- function(gTmp, recTmp, tfTmp){
-	library(igraph)
+	#library(igraph)
 	
 	vTmp <- V(gTmp)$name
 	nPath1 <- 0
@@ -187,6 +188,48 @@ getKeggNet1 <- function(gSym1){
 	return(e1)
 
 }
+
+getActiveTF4 <- function(fc, gSym, nTar, T0){
+	
+	tfTar0 <- read.table('./tfTarget.txt', header=F, sep='\t')
+	tfTar0 <- as.matrix(tfTar0)
+
+	# identify the activated TFs
+	tar1 <- unique(tfTar0[,2])
+	idxt1 <- which(gSym %in% tar1)
+	
+	sTar1 <- fc[idxt1] # suppression (negative zscore) for drugs
+	
+	tf1 <- unique(tfTar0[,1])
+	nTf <- length(tf1)
+	
+	sTf <- rep(0, nTf)  # importance score of TF
+	for (i in 1:nTf){
+		str1 <- tf1[i]  # i-th TF
+		str2 <- tfTar0[tfTar0[,1] == str1, 2]  #targets of given TF
+		idxt2 <- which(tar1 %in% str2)
+		st <- sTar1[idxt2]
+		st1 <- st[order(st, decreasing=T)]
+		nt1 <- min(nTar, length(st1))
+
+		st1 <- st1[1:nt1]
+		sTf[i] <- sum(st1)/nt1	
+	}
+	
+	idxt1 <- order(sTf, decreasing=T)
+	sTf <- sTf[idxt1]
+	tf2 <- tf1[idxt1]
+
+	idx <- which(sTf >= T0)
+	if (length(idx) < 1){
+		idx <- 1
+	}
+
+	tf2 <- tf2[idx]
+	
+	return(tf2)
+}
+
 
 getActiveTF3 <- function(fc, gSym){
 	
