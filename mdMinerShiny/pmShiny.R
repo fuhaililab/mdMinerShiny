@@ -1,15 +1,25 @@
+# for debuging: 
+if (1 == 2){
+	wDir <- c('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/')
+	setwd(wDir)
+	f1 <- c("./foldchangePc3.txt")
+	x1 <- read.table(f1, header=F, sep='\t')  # x1 variable has the data
+	x1 <- as.matrix(x1)  # conver the list format into matrix format
+
+	gSym <- as.character(x1[,1])  # get the gene Symbols
+	fc <- as.numeric(x1[,2])  # get the value of fold change
+	x = getPersonalNet1(fc, gSym);
+
+
+}
+
 # 1) install R packages
 library(org.Hs.eg.db)
 library(graphite)
 library(igraph)
 
 # 2) read in the fold change data
-# f1 <- c("path to fold change file/file name")  # fiel name: for example: f1 <- c("./foldchangePc3.txt")
-# x1 <- read.table(f1, header=F, sep='\t')  # x1 variable has the data
-# x1 <- as.matrix(x1)  # conver the list format into matrix format
-
-# gSym <- as.character(x1[,1])  # get the gene Symbols
-# fc <- as.numeric(x1[,2])  # get the value of fold change
+# f1 <- c("path to fold change file/file name")  # fiel name: for example: 
 
 #fDrugMoa <- c('./drugMoaNets/')
 getRepositionDrugs <- function(netPatient, n1){
@@ -142,13 +152,15 @@ getKeggNet1 <- function(gSym1){
 	library(graphite)	
 	
 	entrezId <- names(as.list(org.Hs.egSYMBOL[]))
-	eEntrez=lapply(kegg,function(x){return(nodes(x))})	
-	nSymbol=lapply(eEntrez,function(x){x=intersect(x,gSym1);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol
 
 	eSymbol <- list()
 	
 	for (i in 1:length(kegg)){
-		e1 <- as.matrix(edges(kegg[[i]]))
+		print(i)
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'
+		e1 <- as.matrix(kegg[[i]]@edges)
 		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]
 
 		dim(e1) <- c(length(e1)/4, 4)
