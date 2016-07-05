@@ -1,6 +1,7 @@
 library(shiny)
 library(networkD3)
 library(shinydashboard)
+library(DT)
 
 shinyUI(fluidPage(theme = "bootstrap.css", 
     tags$style(type="text/css",
@@ -17,12 +18,12 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
                   accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
         tags$h5("Top Ten Drug Suggestions"),
-        tableOutput("table")
+        DT::dataTableOutput("table")
       ),
       dashboardBody( 
         fluidRow(
           box(title= tags$h5("Patient Information and Gene Network"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("force", height = 400, width = 400)),
-          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, status = "primary")
+          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, status = "primary", collapsible = TRUE, verbatimTextOutput("text"), height = 400)
           ),
         # fixedRow(
         #   column(6,

@@ -1,11 +1,10 @@
 library(shiny)
 library(networkD3)
-data(MisLinks)
-data(MisNodes)
+library(DT)
 
 shiny.maxRequestSize=30*1024^2
 
-source("./Module_A.r");
+source("./Module_A.R");
 source("./pmshiny.R");
 shinyServer(function(input, output) {
 	# RNASeq <- reactive({
@@ -41,28 +40,44 @@ shinyServer(function(input, output) {
 
 	# })
 
-	output$text <- renderText({
-		paste("You are choosing the", input$dataType, "of", input$cancerType)
-	})
+	# output$text <- renderText({
+	# 	paste("You are choosing the", input$dataType, "of", input$cancerType)
+	# })
 
-	output$downloadData <- downloadHandler(
-		filename = function() {
-			paste(input$cancerType, '_', input$dataType, '.txt', sep='')
-		},
-		content = function(file) {
-			write.table(RNASeq(), file, quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
-		}
-	)
+	# output$downloadData <- downloadHandler(
+	# 	filename = function() {
+	# 		paste(input$cancerType, '_', input$dataType, '.txt', sep='')
+	# 	},
+	# 	content = function(file) {
+	# 		write.table(RNASeq(), file, quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
+	# 	}
+	# )
 
-	output$force <- renderForceNetwork({
-	    inFile <- input$file1;
+	networkAndDrugScore <- reactive({
+	    inFile <- input$file1
 	    if (!is.null(inFile)) {	    	
-			foldChangePC = read.table(inFile$datapath);
-			foldChangePC = as.matrix(foldChangePC)
-			gSym = as.character(foldChangePC[, 1])
-			fc = as.numeric(foldChangePC[, 2])
-			x = getPersonalNet1(fc, gSym);
-			
+			foldChangePC <- read.table(inFile$datapath)
+			foldChangePC <- as.matrix(foldChangePC)
+			gSym <- as.character(foldChangePC[, 1])	
+			fc <- as.numeric(foldChangePC[, 2])
+			x <- getPersonalNet1(fc, gSym)
+			y <- getRepositionDrugs(x, 20)
+			Drug <- y[, 1]
+			Score <- y[, 2]
+			drugAndScore <- data.frame(Drug, Score)
+			return(list(network = x, drugAndScore = drugAndScore))
+		}
+	})
+	
+	output$force <- renderForceNetwork({
+	  #   inFile <- input$file1;
+	  #   if (!is.null(inFile)) {	    	
+			# foldChangePC = read.table(inFile$datapath);
+			# foldChangePC = as.matrix(foldChangePC)
+			# gSym = as.character(foldChangePC[, 1])
+			# fc = as.numeric(foldChangePC[, 2])
+			# x = getPersonalNet1(fc, gSym);
+			x = networkAndDrugScore()$network;
 			sourceName = x[, 1];
 			targetName = x[, 2];
 			name = unique(c(as.character(sourceName), as.character(targetName)));
@@ -87,19 +102,10 @@ shinyServer(function(input, output) {
 			forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", Target = "target",
 			            Value = "value", NodeID = "name", Nodesize = "size", Group = "group", colourScale = JS("d3.scale.category10()"),
 			            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);	    	
-    	}
+    	# }
 	})
 
-	output$table <- renderTable({
-	    inFile <- input$file1;
-	    if (!is.null(inFile)) {	    	
-			foldChangePC = read.table(inFile$datapath);
-			foldChangePC = as.matrix(foldChangePC)
-			gSym = as.character(foldChangePC[, 1])
-			fc = as.numeric(foldChangePC[, 2])
-			x = getPersonalNet1(fc, gSym);
-			getRepositionDrugs(x, 10);
-    	}		
-	})
+	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single')
 
+	output$text <- renderPrint(input$table_rows_selected[1])
 })
