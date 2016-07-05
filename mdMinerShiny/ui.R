@@ -13,23 +13,24 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         titleWidth= 450
       ),
       dashboardSidebar(
+        width = 450,
         fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
                   accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
-        tags$h5("Top Ten Drug Suggestions") #,
-        #tableOutput("table")
+        tags$h5("Top Ten Drug Suggestions"),
+        tableOutput("table")
       ),
       dashboardBody( 
         fluidRow(
-          box(title= tags$h5("Patient Information and Gene Network"), solidHeader= TRUE, background="light-blue"),
-          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, background="light-blue")
+          box(title= tags$h5("Patient Information and Gene Network"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("force", height = 400, width = 400)),
+          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, status = "primary")
           ),
-        fixedRow(
-          column(6,
-            forceNetworkOutput("force")
-          ),
-          column(6,
-            forceNetworkOutput("geneforce")
-          ),
+        # fixedRow(
+        #   column(6,
+        #     forceNetworkOutput("force")
+        #   ),
+        #   column(6,
+        #     forceNetworkOutput("geneforce")
+        #   ),
         fixedRow(
           box(title= tags$h5("Patient and Drug Merged Netowrk"), solidHeader= TRUE, background="light-blue"),
           box(title= tags$h5("Survival Analysis"), solidHeader= TRUE, background="light-blue")
@@ -45,4 +46,4 @@ shinyUI(fluidPage(theme = "bootstrap.css",
       )
     )
   )
-))
+)

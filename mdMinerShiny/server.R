@@ -90,4 +90,16 @@ shinyServer(function(input, output) {
     	}
 	})
 
+	output$table <- renderTable({
+	    inFile <- input$file1;
+	    if (!is.null(inFile)) {	    	
+			foldChangePC = read.table(inFile$datapath);
+			foldChangePC = as.matrix(foldChangePC)
+			gSym = as.character(foldChangePC[, 1])
+			fc = as.numeric(foldChangePC[, 2])
+			x = getPersonalNet1(fc, gSym);
+			getRepositionDrugs(x, 10);
+    	}		
+	})
+
 })
