@@ -105,7 +105,8 @@ shinyServer(function(input, output) {
     	# }
 	})
 
-	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single')
+	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single', 
+	         options = list(pageLength = 3))
 
 	output$text <- renderPrint(input$table_rows_selected[1])
 })
