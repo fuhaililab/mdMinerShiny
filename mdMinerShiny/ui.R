@@ -27,11 +27,11 @@ shinyUI(fluidPage(theme = "bootstrap.css",
           box(title=tags$b("Top Drug Suggestions"), value = tags$p(style = "font-size: 10px;", tags$b()),  solidHeader= TRUE,collapsible = TRUE,  status = "info", DT::dataTableOutput("table", width = 924, height = 200), width =12)
           ),
         fixedRow(
-          box(title=tags$b("Patient and Drug Merged Netowrk"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12 )
+          box(title=tags$b("Patient and Drug Merged Netowrk"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12, verbatimTextOutput("text"))
         ),
         fluidRow(
-          box(title=tags$b("Patient Information and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("force", height = 400, width = 400)),
-          box(title=tags$b("Drug Suggestion and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE) #, verbatimTextOutput("text"), height = 400)
+          box(title=tags$b("Patient Information and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("patientNetwork", height = 400, width = 400)),
+          box(title=tags$b("Drug Suggestion and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("drugNetwork", height = 400, width = 400))
           )
         # fixedRow(
         #   column(6,

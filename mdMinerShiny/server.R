@@ -69,7 +69,7 @@ shinyServer(function(input, output) {
 		}
 	})
 	
-	output$force <- renderForceNetwork({
+	output$patientNetwork <- renderForceNetwork({
 	  #   inFile <- input$file1;
 	  #   if (!is.null(inFile)) {	    	
 			# foldChangePC = read.table(inFile$datapath);
@@ -105,6 +105,38 @@ shinyServer(function(input, output) {
     	# }
 	})
 
+	output$drugNetwork <- renderForceNetwork({
+		if (!is.null(input$table_rows_selected)) {
+			drugName = networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1];
+			x = read.table(paste("./drugMoaNets/", as.character(drugName), '.txt'));
+
+			sourceName = x[, 1];
+			targetName = x[, 2];
+			name = unique(c(as.character(sourceName), as.character(targetName)));
+			group = numeric(length(name)) + 1;
+			group[match(('CREBBP'), name)] = 2;
+			group[match(('ATF4'), name)] = 3;
+
+			size = numeric(length(name));
+			size[match(('ATF4'), name)] = 15;
+			MisNodes = data.frame(name, group, size);
+
+			source = c(match(sourceName[1], name) - 1);
+			target = c(match(targetName[1], name) - 1);
+			for (i in 2:length(sourceName)) {
+				source = c(source, match(sourceName[i], name) - 1);
+				target = c(target, match(targetName[i], name) - 1);
+			}
+
+			value = numeric(length(source)) + 1;
+			MisLinks = data.frame(source, target, value);
+
+			forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", Target = "target",
+			            Value = "value", NodeID = "name", Nodesize = "size", Group = "group", colourScale = JS("d3.scale.category10()"),
+			            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);			
+		}
+	})
+	
 	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single', 
 	         options = list(pageLength = 5))
 	
@@ -124,5 +156,5 @@ shinyServer(function(input, output) {
 	# 	}
 	# )
 
-	output$text <- renderPrint(input$table_rows_selected[1])
+	output$text <- renderPrint(networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1])
 })
