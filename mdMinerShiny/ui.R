@@ -18,18 +18,21 @@ shinyUI(fluidPage(theme = "bootstrap.css",
       dashboardSidebar(
         #width = 450,
         fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
-                  accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')) #,
-        #tags$h5("Top Drug Suggestions"),
-        #DT::dataTableOutput("table")
+                  accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
+        tags$h5("Click to Download the Top Drug Suggestions Table"),
+        downloadButton('downloadData', 'Download')
       ),
       dashboardBody( 
         fluidRow(
-          box(title= tags$h5("Top Drug Suggestions"), solidHeader= TRUE, status = "info", collapsible = TRUE, DT::dataTableOutput("table", width = 924, height = 200), width =12)
+          box(title=tags$b("Top Drug Suggestions"), value = tags$p(style = "font-size: 10px;", tags$b()),  solidHeader= TRUE,collapsible = TRUE,  status = "info", DT::dataTableOutput("table", width = 924, height = 200), width =12)
           ),
+        fixedRow(
+          box(title=tags$b("Patient and Drug Merged Netowrk"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12 )
+        ),
         fluidRow(
-          box(title= tags$h5("Patient Information and Gene Network"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("force", height = 400, width = 400)),
-          box(title =tags$h5("Drug Suggestion and Gene Network"), solidHeader= TRUE, status = "primary", collapsible = TRUE) #, verbatimTextOutput("text"), height = 400)
-          ),
+          box(title=tags$b("Patient Information and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("force", height = 400, width = 400)),
+          box(title=tags$b("Drug Suggestion and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE) #, verbatimTextOutput("text"), height = 400)
+          )
         # fixedRow(
         #   column(6,
         #     forceNetworkOutput("force")
@@ -37,19 +40,8 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         #   column(6,
         #     forceNetworkOutput("geneforce")
         #   ),
-        fixedRow(
-          box(title= tags$h5("Patient and Drug Merged Netowrk"), solidHeader= TRUE, status = "primary", collapsible = TRUE),
-          box(title= tags$h5("Survival Analysis"), solidHeader= TRUE, status = "primary", collapsible = TRUE)
-        ),
-        fixedRow(
-          column(6,
-                 forceNetworkOutput("mergeforce")
-          ),
-          column(6,
-                 plotOutput("survival")
           )
         )
       )
     )
-  )
-)
+  

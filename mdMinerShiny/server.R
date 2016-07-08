@@ -106,7 +106,23 @@ shinyServer(function(input, output) {
 	})
 
 	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single', 
-	         options = list(pageLength = 3))
+	         options = list(pageLength = 5))
+	
+	output$downloadData <-  downloadHandler(
+	  filename = function() {paste("Top Drugs", ".csv", sep="")},
+	  content = function(file) {
+	    write.csv(networkAndDrugScore()$drugAndScore, file, row.names=F)
+	  }
+)
+	
+	# output$downloadData <- downloadHandler(
+	# 	filename = function() {
+	# 		paste(input$cancerType, '_', input$dataType, '.txt', sep='')
+	# 	},
+	# 	content = function(file) {
+	# 		write.table(RNASeq(), file, quote = FALSE, sep = "\t", na = "", col.names = FALSE, row.names = FALSE)
+	# 	}
+	# )
 
 	output$text <- renderPrint(input$table_rows_selected[1])
 })
