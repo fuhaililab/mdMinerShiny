@@ -161,24 +161,23 @@ shinyServer(function(input, output) {
 				if (length(overlap) > 0) {
 					for (i in 1:length(overlap)) {
 						group[match((as.character(overlap[i])), name)] = 2;
-					}	
-
-					MisNodes = data.frame(name, group, size);
-
-					source = c(match(sourceName[1], name) - 1);
-					target = c(match(targetName[1], name) - 1);
-					for (i in 2:length(sourceName)) {
-						source = c(source, match(sourceName[i], name) - 1);
-						target = c(target, match(targetName[i], name) - 1);
-					}
-
-					value = numeric(length(source)) + 1;
-					MisLinks = data.frame(source, target, value);
-
-					forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", Target = "target",
-					            Value = "value", NodeID = "name", Nodesize = "size", Group = "group", colourScale = JS("d3.scale.category10()"),
-					            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);					
+					}						
 				}
+				MisNodes = data.frame(name, group, size);
+
+				source = c(match(sourceName[1], name) - 1);
+				target = c(match(targetName[1], name) - 1);
+				for (i in 2:length(sourceName)) {
+					source = c(source, match(sourceName[i], name) - 1);
+					target = c(target, match(targetName[i], name) - 1);
+				}
+
+				value = numeric(length(source)) + 1;
+				MisLinks = data.frame(source, target, value);
+
+				forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source", Target = "target",
+				            Value = "value", NodeID = "name", Nodesize = "size", Group = "group", colourScale = JS("d3.scale.category10()"),
+				            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);				
 			}		
 		}	    	
 
@@ -188,11 +187,11 @@ shinyServer(function(input, output) {
 	         options = list(pageLength = 5))
 	
 	output$downloadData <-  downloadHandler(
-	  filename = function() {paste("Top Drugs", ".csv", sep="")},
-	  content = function(file) {
-	    write.csv(networkAndDrugScore()$drugAndScore, file, row.names=F)
-	  }
-)
+		filename = function() {paste("Top Drugs", ".csv", sep="")},
+		content = function(file) {
+			write.csv(networkAndDrugScore()$drugAndScore, file, row.names=F)
+		}
+	)
 	
 	# output$downloadData <- downloadHandler(
 	# 	filename = function() {
@@ -204,7 +203,7 @@ shinyServer(function(input, output) {
 	# )
 
 	output$text <- renderPrint(
-		paste('You choose drug: ', networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1], sep='')
+		paste('You Choose Drug: ', networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1], sep='')
 	)
 })
 
