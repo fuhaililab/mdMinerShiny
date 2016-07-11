@@ -1,0 +1,796 @@
+clear
+clear()
+just a test is very important is the key
+source("https://bioconductor.org/biocLite.R")#
+biocLite()
+source("http://bioconductor.org/biocLite.R")#
+biocLite()
+install.packages("hgu133plus2.db")
+~/FHLosu/Projects/PrecisionMedicine/Prostate/res/PRAD_tcga_RNAseq_probe_400_dis_matrix.txt
+clc
+wDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/codeR/"#
+setwd(wDir)#
+#
+# file folders for input/output data#
+dataCommonDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/DataCommon/"#
+dataDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/Prostate/" # #
+resDirTmp <- paste(dataDir, "/resTmp", sep='')#
+dir.create(resDirTmp)#
+resDir <- paste(dataDir, '/Res', sep='');
+filePatientDrugDis <- paste(resDir, 'PRAD_tcga_RNAseq_cmap_probe_300_dis_matrix.txt', sep='/')#
+	patientDrugDis <- read.delim(filePatientDrugDis)
+resDir
+wDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/codeR/"#
+setwd(wDir)#
+#
+# file folders for input/output data#
+dataCommonDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/DataCommon/"#
+dataDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/Prostate/" # #
+resDirTmp <- paste(dataDir, "/resTmp", sep='')#
+dir.create(resDirTmp)#
+resDir <- paste(dataDir, '/Res', sep='');
+filePatientDrugDis <- paste(resDir, 'PRAD_tcga_RNAseq_cmap_probe_300_dis_matrix.txt', sep='/')#
+	patientDrugDis <- read.delim(filePatientDrugDis)
+dim(patientDrugDis)
+patientDrugDis <- read.delim(filePatientDrugDis, header=F, sep='\t')
+dim(patientDrugDis)
+RnaSeqPrad <- read.delim(fileRnaSeqPrad, header=F, sep='\t')
+fileRnaSeqPrad <- paste(resDir, 'PRAD_tcga_RNAseq_matrix.txt', sep='/')#
+	RnaSeqPrad <- read.delim(fileRnaSeqPrad, header=F, sep='\t')
+RnaSeqPrad[1,1]
+RnaSeqPrad <- read.delim(fileRnaSeqPrad, header=T, sep='\t')
+RnaSeqPrad[1,1]
+dim(RnaSeqPrad)
+source("http://bioconductor.org/workflows.R")#
+workflowInstall("annotation")
+wDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/codeR/"#
+setwd(wDir)#
+#
+# file folders for input/output data#
+dataCommonDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/DataCommon/"#
+dataDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/Prostate/" # #
+resDirTmp <- paste(dataDir, "/resTmp", sep='')#
+dir.create(resDirTmp)#
+resDir <- paste(dataDir, '/Res', sep='');#
+#
+if (1 == 2){#
+	source(paste(wDir, '/userFunctions.R', sep=''))#
+	source(paste(wDir, '/tcga.data.reader.R', sep=''))#
+}
+fileMapUcsc2GeneSymbol <- paste(dataCommonDir, 'ucscID2geneSymbol', sep='/')#
+	mapUcsc2GeneSymbol <- read.delim(fileMapUcsc2GeneSymbol, header=F, sep='\t')
+dim(mapUcsc2geneSymbol)
+dim(mapUcsc2GeneSymbol)
+mapUcsc2GeneSymbol[1,]
+fileMapUcsc2GeneSymbol <- paste(dataCommonDir, 'ucscID2geneSymbol', sep='/')#
+	mapUcsc2GeneSymbol <- read.delim(fileMapUcsc2GeneSymbol, header=T, sep='\t')
+filePc3Seq1 <- paste(dataDir, 'GSE35469_RAW/GSM869036_mrna_dmso_a_qexpr.txt', sep='/')#
+	pc3Seq1 <- read.delim(filePc3Seq1, header=F, sep='\t')
+dim(pc3Seq)
+dim(pc3Seq1)
+pc3Seq1[1,]
+filePc3Seq2 <- paste(dataDir, 'GSE35469_RAW/GSM869042_mrna_dmso_a_qexpr.txt', sep='/')#
+	pc3Seq2 <- read.delim(filePc3Seq1, header=F, sep='\t')
+mode(pc3Seq1)
+dim(pc3Seq1)
+dim(pc3Seq2)
+pc3Seq1 <- as.matrix(pc3Seq1)
+pc3Seq2 <- as.matrix(pc3Seq2)
+ucscID <- pc3Seq1[,1]
+ucscID
+clc
+mapUcsc2GeneSymbol <- as.matrix(mapUcsc2GeneSymbol)
+ucscID2GeneSymbol <- function(ucscID, mapUcscGeneSymbol){#
+	ucscID1 <- mapUcscGeneSymbol[,1]#
+	nID <- length(ucscID1)#
+	geneSymbol <- rep('NULL', nID)#
+	for (i in 1:nID){#
+		strt <- ucscID1[i]#
+		idx1 <- which(ucscID1 %in% strt)#
+		if (length(idx1)>0){#
+			geneSymbol[i] <- mapUcscGeneSymbol[i,2]#
+		}#
+	}#
+	return(geneSymbol)#
+}
+mapUcsc2GeneSymbol <- as.matrix(mapUcsc2GeneSymbol)#
+#
+	ucscID <- pc3Seq1[,1]#
+	geneSymbol1 <- ucscID2geneSymbol(ucscID, mapUcsc2GeneSymbol)
+ucscID <- pc3Seq1[,1]#
+	geneSymbol1 <- ucscID2GeneSymbol(ucscID, mapUcsc2GeneSymbol)
+wDir <- "/Users/li150/Desktop/FHLosu/Projects/PrecisionMedicine/codeR/"#
+setwd(wDir)#
+#
+# file folders for input/output data#
+dataCommonDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/DataCommon/"#
+dataDir <- "/Users/li150/FHLosu/Projects/PrecisionMedicine/Prostate/" # #
+resDirTmp <- paste(dataDir, "/resTmp", sep='')#
+dir.create(resDirTmp)#
+resDir <- paste(dataDir, '/Res', sep='');#
+#
+if (1 == 2){#
+	source(paste(wDir, '/userFunctions.R', sep=''))#
+	source(paste(wDir, '/tcga.data.reader.R', sep=''))#
+}
+# RnaSeq of PC-3 Cellline: GSE35469#
+	filePc3Seq1 <- paste(dataDir, 'GSE35469_RAW/GSM869036_mrna_dmso_a_qexpr.txt', sep='/')#
+	pc3Seq1 <- read.delim(filePc3Seq1, header=F, sep='\t')#
+	pc3Seq1 <- as.matrix(pc3Seq1)#
+#
+	filePc3Seq2 <- paste(dataDir, 'GSE35469_RAW/GSM869042_mrna_dmso_a_qexpr.txt', sep='/')#
+	pc3Seq2 <- read.delim(filePc3Seq1, header=F, sep='\t')#
+	pc3Seq2 <- as.matrix(pc3Seq2)#
+#
+	fileMapUcsc2GeneSymbol <- paste(dataCommonDir, 'ucscID2geneSymbol', sep='/')#
+	mapUcsc2GeneSymbol <- read.delim(fileMapUcsc2GeneSymbol, header=T, sep='\t')#
+	mapUcsc2GeneSymbol <- as.matrix(mapUcsc2GeneSymbol)
+ucscID <- pc3Seq1[,1]
+mode(ucscID)
+mode(mapUcsc2GeneSymbol)
+ucscID2GeneSymbol <- function(ucscID, mapUcscGeneSymbol){#
+	ucscID1 <- mapUcscGeneSymbol[,1]#
+	nID <- length(ucscID1)#
+	geneSymbol <- rep('NULL', nID)#
+	for (i in 1:nID){#
+		strt <- ucscID1[i]#
+		idx1 <- which(ucscID1 %in% strt)#
+		if (length(idx1)>0){#
+			geneSymbol[i] <- mapUcscGeneSymbol[i,2]#
+		}#
+	}#
+	return(geneSymbol)#
+#
+	#apply(ucscID, 1, )#
+}
+ucscID1 <- mapUcscGeneSymbol[,1]
+ucscID1 <- mapUcsc2GeneSymbol[,1]
+mode(ucscID1)
+length(ucscID1)
+ucscID2GeneSymbol <- function(ucscID, mapUcsc2GeneSymbol){#
+	ucscID1 <- mapUcsc2GeneSymbol[,1]#
+	nID <- length(ucscID)#
+	geneSymbol <- rep('NULL', nID)#
+	idx <- apply(ucscID, 1, elementLocate, Y=ucscID1)#
+	geneSymbol <- mapUcscGeneSymbol[idx,2]#
+	return(geneSymbol)#
+}#
+#
+elementLocate <- function(x, Y){#
+	idx <- which(x %in% Y)#
+}
+ucscID <- pc3Seq1[,1]#
+	geneSymbol1 <- ucscID2GeneSymbol(ucscID, mapUcsc2GeneSymbol)
+ucscID2GeneSymbol <- function(ucscID, mapUcsc2GeneSymbol){#
+	dim(ucscID) <- c(length(ucscID),1)#
+	ucscID1 <- mapUcsc2GeneSymbol[,1]#
+	nID <- length(ucscID)#
+	geneSymbol <- rep('NULL', nID)#
+	idx <- apply(ucscID, 1, elementLocate, Y=ucscID1)#
+	geneSymbol <- mapUcscGeneSymbol[idx,2]#
+	return(geneSymbol)#
+}#
+#
+elementLocate <- function(x, Y){#
+	idx <- which(x %in% Y)#
+}
+ucscID <- pc3Seq1[,1]#
+	geneSymbol1 <- ucscID2GeneSymbol(ucscID, mapUcsc2GeneSymbol)
+1200 * 36
+1129*36
+1273*36
+1213*36
+1.185^3
+1700*24
+966*60
+982*36
+clc
+exit
+quit()
+26.3 + 2 + 1 + 2
+1.02^30
+1.05^30
+1.03^30
+300*1.02
+300*1.03
+1/8
+1911/0.118
+0.882*1911/0.118
+2900 + 300 + 2650 - 3500
+750 + 1334.71
+3000-2084.71
+3000-2146
+1.05^30
+7*4.3
+a = c(1,2)
+a = matrix(0, 2,2)
+col.names(a) <- c('test', 'test1')
+colnames(a) <- c('test', 'test1')
+0.3^1/3
+0.3^0.3
+0.3^2
+0.5^2
+x <- 1:100
+x <- x/10
+x
+y <- x^3
+plot(y)
+plot(x,y)
+1/2.5
+0.4^3
+0.4^3*2
+0.5^3
+0.5^4
+0.4^4*2
+0.4^6*3
+0.5^6
+0.4^8*3
+0.5^8
+dim(eKegg)
+wDir <- c('/Users/li150/FHLosu/gitRepository1/mdMinerShiny')#
+	setwd(wDir)#
+	source('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/pmShiny.R')
+wDir <- c("/Users/li150/FHLosu/Projects/PrecisionMedicine/codeR/")#
+	setwd(wDir)#
+#
+	dirDat0 <- c("/Users/li150/FHLosu/Projects/PrecisionMedicine/DataCommon/")#
+#
+	# file folders for input/output data#
+	lincsGctx1 <- c("/Users/li150/FHLosu/Projects/lincs/zspc_n1328098x22268.gctx") # lincs data; downloaded from S3 via firefox#
+	lincsInfo1 <- c("/Users/li150/FHLosu/Projects/lincs/inst.info")  # downloaded from S3 via firefox#
+	lincsInfo2 <- c("/Users/li150/FHLosu/Projects/lincs/CMapTable1466476646004.txt")  # Downloaded from Lincscloud website: http://apps.lincscloud.org/data_synopsis##
+#
+	resDir1 <- c("/Users/li150/FHLosu/Projects/lincs/")#
+	dir.create(resDir1, recursive=T, showWarnings=F)#
+	# source the io script#
+	source(paste(wDir, "cmapL1ktools/io.R", sep=""))#
+	source('/Users/li150/FHLosu/Projects/PrecisionMedicine/codeR/userFunctions.R')#
+	source('/Users/li150/FHLosu/gitRepository1/pmShiny.R')
+source('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/pmShiny.R')
+d1 <- read.delim(lincsInfo1, sep='\t')#
+#
+	instId1 <- as.character(d1[,1])#
+	cellId1 <- as.character(d1[,4])#
+	drugId1 <- as.character(d1[,2])#
+	#which(drugId1 %in% 'BRD-K49328571')  # Dasatinib#
+#
+	d2 <- read.delim(lincsInfo2, sep='\t') #
+	drugInfo2 <- as.matrix(d2[,c(1,3)])#
+#
+	d3 <- read.gctx.meta(lincsGctx1, dimension="row")#
+	rowName <- d3$id#
+#
+	d4 <- read.gctx.meta(lincsGctx1, dimension="col")#
+	colName <- d4$id
+f1 <- paste(dirDat0, '/uniprot links all drugs.csv', sep='')#
+	drugTar1 <- getTargetDrugBank(f1)	#
+	drugS1 <- unique(drugTar1[,1])  # 4797 drugs (have target information) collected from drugbank#
+	# prestwick drug library: # There are repeated drugs (732 drugs, 1006 ids) #
+	dirProject1 <- c("/Users/li150/FHLosu/Projects/PrecisionMedicine/Prostate/")#
+	f1 <- paste(dirProject1, '/PC3/PC3_ScreeningData.txt', sep='')#
+	drgExp <- read.delim(f1, header=T, sep='\t') #
+	drgExp <- as.matrix(drgExp)#
+	drgExp <- drgExp[,1]  # 1398 drugs from pretwick drug library#
+#
+	# common drugs # 425 common drugs in both drugbank and prestwick library#
+	drugS3 <- intersect(tolower(drugS1), drgExp)  #
+#
+	# drugs in both drugS3 and lincs: 403 out of 425 drugs (608 lincs drug IDs)#
+	drugList1 <- drugInfo2[drugInfo2[,1] %in% drugS3, 1]  #
+	drugListId1 <- drugInfo2[drugInfo2[,1] %in% drugS3, 2]#
+#
+	# get the Z-scores of drugs in drugS3#
+	n1 <- length(drugList1)#
+	n1 <- 2;#
+	if (n1 > 0){#
+#
+		instId2 <- rep('test', 1)#
+		instDrugName2 <- rep('test',1)#
+		instDrugId1 <- rep('test',1)#
+#
+		k <- 1#
+		for (i in 1:n1){#
+			strt <- paste('collecting inst Ids of drug', i, 'out of', n1, 'drugs', sep=' ')#
+			print(strt)#
+			str1 <- drugList1[i]  # drug name#
+			drgIdt1 <- drugListId1[i]#
+			cidt1 <- instId1[drugId1 %in% drgIdt1]#
+			nt <- length(cidt1)#
+			instId2[(k+1): (k+nt)] <- cidt1#
+			instDrugName2[(k+1): (k+nt)] <- rep(str1, nt)#
+			instDrugId1[(k+1): (k+nt)] <- rep(drgIdt1, nt)#
+			k <- k+nt#
+		}#
+#
+		instId2 <- instId2[-1]  # remove the first element: 'test'#
+		instDrugName2 <- instDrugName2[-1]#
+		instDrugId1 <- instDrugId1[-1]#
+#
+		ds <- parse.gctx(lincsGctx1, cid = instId2)#
+		gExp1 <- ds@mat#
+		idt <- ds@cdesc#
+		instId3 <- idt$id#
+#
+		# f1 <- c("/Users/li150/FHLosu/Projects/lincs/prestwickDrugsAll.txt") #
+		# rownames(gExp1) <- rowName#
+		# colnames(gExp1) <- instId3#
+		# write.table(f1, row.names=T, col.names=T, quote=F, sep='\t');
+}
+library(org.Hs.eg.db)#
+	library(graphite)	#
+	entrezId <- names(as.list(org.Hs.egSYMBOL[]))#
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})#
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol#
+#
+	eSymbol <- list()
+nSymbol
+eSymbol <- list()#
+	for (i in 1:length(kegg)){#
+		# print(i)#
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'#
+		e1 <- as.matrix(kegg[[i]]@edges)#
+		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]#
+#
+		dim(e1) <- c(length(e1)/4, 4)#
+#
+		e1[,1] <- unlist(as.list(org.Hs.egSYMBOL[e1[,1]]))#
+		e1[,2] <- unlist(as.list(org.Hs.egSYMBOL[e1[,2]]))#
+		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed#
+		if (length(e2) > 0){#
+			dim(e2) <- c(length(e2)/4, 4)#
+			e2=e2[,c(2:1,3:4)]	#
+			e1 <- rbind(e1, e2)#
+		}#
+		eSymbol[[i]] <- e1[!duplicated(e1),]#
+	}#
+	names(eSymbol)=names(kegg)
+eSymbol
+pathwayKegg <- {}
+i <- 1
+e1 <- eSymbol[[i]]#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp
+library(igraph)
+e1 <- eSymbol[[i]]#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp
+pathwayKegg
+mode(pathwayKegg)
+x <- {}
+mode(x)
+x <- list()
+mode(x)
+x
+length(x)
+x[[1]]
+pathwayKegg <- []
+pathwayKegg <- []
+pathwayKegg <- {}}
+pathwayKegg <- {}
+mode(pathwayKegg)
+length(pathwayKegg)
+c([])
+# ...#
+getKeggNet2 <- function(){#
+	library(org.Hs.eg.db)#
+	library(graphite)	#
+	entrezId <- names(as.list(org.Hs.egSYMBOL[]))#
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})#
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol#
+#
+	eSymbol <- list()#
+	for (i in 1:length(kegg)){#
+		# print(i)#
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'#
+		e1 <- as.matrix(kegg[[i]]@edges)#
+		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]#
+#
+		dim(e1) <- c(length(e1)/4, 4)#
+#
+		e1[,1] <- unlist(as.list(org.Hs.egSYMBOL[e1[,1]]))#
+		e1[,2] <- unlist(as.list(org.Hs.egSYMBOL[e1[,2]]))#
+		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed#
+		if (length(e2) > 0){#
+			dim(e2) <- c(length(e2)/4, 4)#
+			e2=e2[,c(2:1,3:4)]	#
+			e1 <- rbind(e1, e2)#
+		}#
+		eSymbol[[i]] <- e1[!duplicated(e1),]#
+	}#
+	names(eSymbol)=names(kegg)#
+#
+	n1 <- length(eSymbol)#
+	pathwayKegg <- {}  # 'Null'#
+#
+	for (i in 2:n1){#
+		e1 <- eSymbol[[i]]#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp#
+	}#
+#
+	return(pathwayKegg)#
+}
+x1 <- getKeggNet2()
+library(org.Hs.eg.db)#
+	library(graphite)#
+	library(igraph)	#
+	entrezId <- names(as.list(org.Hs.egSYMBOL[]))#
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})#
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol#
+#
+	eSymbol <- list()#
+	for (i in 1:length(kegg)){#
+		# print(i)#
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'#
+		e1 <- as.matrix(kegg[[i]]@edges)#
+		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]#
+#
+		dim(e1) <- c(length(e1)/4, 4)#
+#
+		e1[,1] <- unlist(as.list(org.Hs.egSYMBOL[e1[,1]]))#
+		e1[,2] <- unlist(as.list(org.Hs.egSYMBOL[e1[,2]]))#
+		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed#
+		if (length(e2) > 0){#
+			dim(e2) <- c(length(e2)/4, 4)#
+			e2=e2[,c(2:1,3:4)]	#
+			e1 <- rbind(e1, e2)#
+		}#
+		eSymbol[[i]] <- e1[!duplicated(e1),]#
+	}#
+	names(eSymbol)=names(kegg)#
+#
+	n1 <- length(eSymbol)#
+	pathwayKegg <- {}  # 'Null'#
+#
+	for (i in 2:n1){#
+		e1 <- eSymbol[[i]]#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp#
+	}
+i
+e1
+dim(e1)
+n1 <- length(eSymbol)#
+	pathwayKegg <- {}  # 'Null'#
+#
+	for (i in 2:n1){#
+		e1 <- eSymbol[[i]]#
+		dim(e1) <- c(length(e1)/4, 4)#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp#
+	}
+e1
+dim(e1)
+n1 <- length(eSymbol)#
+	pathwayKegg <- {}  # 'Null'#
+#
+	for (i in 2:n1){#
+		e1 <- eSymbol[[i]]#
+		dim(e1) <- c(length(e1)/4, 4)#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		dim(e1) <- c(length(e1)/2, 2)#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp#
+	}
+pathwayKegg
+pnorm(1.5)
+pnorm(-1.5)
+dim(gExp2)
+dim(gExp1)
+fc <- gExp1[,1]
+fc
+vS <- 1.0-pnorm(fc)
+vs
+vS
+fc
+vS
+j <- 1
+beta1 <- 6;
+gSym <- probe2symbolHug133A(dirDat0, rowName)  # get gene Symbol of the probes in HuG133A.#
+	gExp2 <- avgGeneExpression(gExp1, gSym)#
+	gSym2 <- gExp2$gene#
+	gExp2 <- gExp2$dat#
+#
+	nDrug <- dim(gExp2)[2]#
+	tar1 <- drugTar1[,2]#
+	drg1 <- tolower(drugTar1[,1])
+gTmp <- pathwayKegg[[j]]#
+				gTmp <- setEdgeWeight1(gTmp, gSym2, vS, beta1)
+length(pathwayKegg)
+t <- pathwayKegg[[1]]
+mode(t)
+t
+t
+pathwayKegg
+pathwayKegg[[1]]
+pathwayKegg[[2]]
+e1 <- as.matrix(kegg[[i]]@edges)
+e1 <- as.matrix(kegg[[1]]@edges)
+e1
+eSymbol[[1]]
+e1 <- eSymbol[[i]]#
+		dim(e1) <- c(length(e1)/4, 4)#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		dim(e1) <- c(length(e1)/2, 2)#
+		gTmp <- graph.edgelist(e1)
+gTmp
+n1 <- length(eSymbol)#
+	pathwayKegg <- {}  # 'Null'#
+#
+	for (i in 1:n1){#
+		e1 <- eSymbol[[i]]#
+		dim(e1) <- c(length(e1)/4, 4)#
+		e1 <- e1[,c(1,2)]  #only source/target information#
+		dim(e1) <- c(length(e1)/2, 2)#
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges#
+		pathwayKegg[[i]] <- gTmp#
+	}
+gTmp <- pathwayKegg[[j]]#
+				gTmp <- setEdgeWeight1(gTmp, gSym2, vS, beta1)
+get.edge.attribute(gTmp, "weight")
+net0 <- matrix('test', 1, 2)#
+			vS <- (1.0-pnorm(fc))  # convert Z-score into p-value;#
+			for (j in 1:nPathway){#
+				gTmp <- pathwayKegg[[j]]#
+				gTmp <- setEdgeWeight1(gTmp, gSym2, vS, beta1)#
+#
+				net1 <- linkNodes1(gTmp, rootGenes, tf1)#
+				if (length(net1) > 1){#
+					dim(net1) <- c(length(net1)/2, 2)#
+					net0 <- rbind(net0, net1)#
+				}#
+			}
+nPathway <- 250
+net0 <- matrix('test', 1, 2)#
+			vS <- (1.0-pnorm(fc))  # convert Z-score into p-value;#
+			for (j in 1:nPathway){#
+				gTmp <- pathwayKegg[[j]]#
+				gTmp <- setEdgeWeight1(gTmp, gSym2, vS, beta1)#
+#
+				net1 <- linkNodes1(gTmp, rootGenes, tf1)#
+				if (length(net1) > 1){#
+					dim(net1) <- c(length(net1)/2, 2)#
+					net0 <- rbind(net0, net1)#
+				}#
+			}
+i <- 1
+strt <- paste('generating MoA Network of drug', i, 'out of', nDrug, 'drugs', sep=' ')#
+			print(strt)#
+			str1 <- instDrugName2[i]#
+			rootGenes <- tar1[which(drg1 %in% str1)]#
+			rootGenes <- nKegg[nKegg %in% rootGenes]#
+			if (length(rootGenes) < 1){#
+				next#
+			}#
+			fc <- gExp2[,i]#
+			tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]
+eKegg <- getKeggNet1(gSym2)#
+		eKegg <- eKegg[,c(1,2)]  #only source/target information#
+		nKegg <- union(eKegg[,1], eKegg[,2])
+str1 <- instDrugName2[i]#
+			rootGenes <- tar1[which(drg1 %in% str1)]#
+			rootGenes <- nKegg[nKegg %in% rootGenes]#
+			if (length(rootGenes) < 1){#
+				next#
+			}#
+			fc <- gExp2[,i]#
+			tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]
+nTar <- 3; T0 <- 1.0; beta1 <- 6;
+str1 <- instDrugName2[i]#
+			rootGenes <- tar1[which(drg1 %in% str1)]#
+			rootGenes <- nKegg[nKegg %in% rootGenes]#
+			if (length(rootGenes) < 1){#
+				next#
+			}#
+			fc <- gExp2[,i]#
+			tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]#
+			if (length(tf1) < 1){#
+				next#
+			}
+rootGenes
+tf1
+T0 <- 1.3
+tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]
+tf1
+T0 <- 1.5
+tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]
+tf1
+T0 <- 2.5
+tf1 <- getActiveTF4(fc, gSym2, nTar, T0)#
+			tf1 <- nKegg[nKegg %in% tf1]
+tf1
+net0 <- matrix('test', 1, 2)
+net0 <- net0[-1,]
+net0
+length(net0)
+getPersonalNet1 <- function(fc, gSym){#
+	options(warn = -1)#
+	library(igraph)#
+	net0 <- matrix('test', 1, 2)#
+#
+	pathwayKegg <- getKeggNet2()#
+	nPathway <- length(pathwayKegg)#
+#
+	eKegg <- getKeggNet1(gSym)#
+	eKegg <- eKegg[,c(1,2)]  #only source/target information#
+	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges#
+#
+	nKegg <- union(eKegg[,1], eKegg[,2]) #
+#
+	nTar <- 3; T0 <- 2.0; beta1 <- 6;#
+#
+	tf1 <- getActiveTF4(fc, gSym, nTar, T0)#
+	tf1 <- nKegg[nKegg %in% tf1]#
+	if (length(tf1) < 1){#
+		return(net0)#
+	}#
+#
+	#get the root genes:#
+	rootGenes <- read.table('./rootGenes.txt', header=F)#
+	rootGenes <- as.character(rootGenes[[1]])#
+	rootGenes <- nKegg[nKegg %in% rootGenes]#
+#
+	if (length(rootGenes) < 1){#
+		return(net0)#
+	}#
+#
+	net0 <- matrix('test', 1, 2)#
+	vS <- 1.0/fc  # reverse of fold change;#
+	for (j in 1:nPathway){#
+		gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym2, vS, beta1)#
+#
+		net1 <- linkNodes1(gTmp, rootGenes, tf1)#
+		if (length(net1) > 1){#
+			dim(net1) <- c(length(net1)/2, 2)#
+			net0 <- rbind(net0, net1)#
+		}#
+	}#
+	if (length(net0) < 3){#
+		next#
+	}#
+	net0 <- net0[-1, ]#
+	# display the net1#
+	return(net0)#
+}
+wDir <- c('/Users/li150/FHLosu/gitRepository1/mdMinerShiny')#
+	setwd(wDir)#
+	source('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/pmShiny.R')
+wDir <- c('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/')#
+	setwd(wDir)#
+	f1 <- c("./foldchangePc3.txt")#
+	x1 <- read.table(f1, header=F, sep='\t')  # x1 variable has the data#
+	x1 <- as.matrix(x1)  # conver the list format into matrix format#
+#
+	gSym <- as.character(x1[,1])  # get the gene Symbols#
+	fc <- as.numeric(x1[,2])  # get the value of fold change#
+	x = getPersonalNet1(fc, gSym);
+pathwayKegg <- getKeggNet2()#
+	nPathway <- length(pathwayKegg)#
+#
+	eKegg <- getKeggNet1(gSym)#
+	eKegg <- eKegg[,c(1,2)]  #only source/target information#
+	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges#
+#
+	nKegg <- union(eKegg[,1], eKegg[,2]) #
+#
+	nTar <- 3; T0 <- 2.0; beta1 <- 6;
+tf1 <- getActiveTF4(fc, gSym, nTar, T0)#
+	tf1 <- nKegg[nKegg %in% tf1]#
+	if (length(tf1) < 1){#
+		return(net0)#
+	}
+tf1
+rootGenes <- read.table('./rootGenes.txt', header=F)#
+	rootGenes <- as.character(rootGenes[[1]])#
+	rootGenes <- nKegg[nKegg %in% rootGenes]
+rootGenes
+net0 <- matrix('test', 1, 2)#
+	vS <- 1.0/fc  # r
+for (j in 1:nPathway){#
+		gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)#
+#
+		net1 <- linkNodes1(gTmp, rootGenes, tf1)#
+		if (length(net1) > 1){#
+			dim(net1) <- c(length(net1)/2, 2)#
+			net0 <- rbind(net0, net1)#
+		}#
+	}
+j
+gTmp
+net1 <- linkNodes1(gTmp, rootGenes, tf1)
+gTmp
+nodeTmp <- V(gTmp)$name
+nodeTmp
+net0 <- matrix('test', 1, 2)#
+	vS <- 1.0/fc  # reverse of fold change;#
+	for (j in 1:nPathway){#
+		gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)#
+#
+		nodeTmp <- V(gTmp)$name#
+		root1 <- intersect(rootGenes, nodeTmp)#
+		tf0 <- intersect(tf1, nodeTmp) #
+		if (length(root1) < 1 | length(tf0)<1){#
+			next#
+		}#
+#
+		net1 <- linkNodes1(gTmp, rootGenes, tf1)#
+		if (length(net1) > 1){#
+			dim(net1) <- c(length(net1)/2, 2)#
+			net0 <- rbind(net0, net1)#
+		}#
+	}
+j
+gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)#
+#
+		nodeTmp <- V(gTmp)$name#
+		root1 <- intersect(rootGenes, nodeTmp)#
+		tf0 <- intersect(tf1, nodeTmp)
+root1
+tf0
+net0 <- matrix('test', 1, 2)#
+	vS <- 1.0/fc  # reverse of fold change;#
+	for (j in 1:nPathway){#
+		gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)#
+#
+		nodeTmp <- V(gTmp)$name#
+		root0 <- intersect(rootGenes, nodeTmp)#
+		tf0 <- intersect(tf1, nodeTmp) #
+		if (length(root0) < 1 | length(tf0)<1){#
+			next#
+		}#
+#
+		net1 <- linkNodes1(gTmp, root0, tf0)#
+		if (length(net1) > 1){#
+			dim(net1) <- c(length(net1)/2, 2)#
+			net0 <- rbind(net0, net1)#
+		}#
+	}
+j
+net0
+net0 <- matrix('test', 1, 2)#
+	vS <- 1.0/fc  # reverse of fold change;#
+	for (j in 1:nPathway){#
+		print(j)#
+		gTmp <- pathwayKegg[[j]]#
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)#
+#
+		nodeTmp <- V(gTmp)$name#
+		root0 <- intersect(rootGenes, nodeTmp)#
+		tf0 <- intersect(tf1, nodeTmp) #
+		if (length(root0) < 1 | length(tf0)<1){#
+			next#
+		}#
+#
+		net1 <- linkNodes1(gTmp, root0, tf0)#
+		if (length(net1) > 1){#
+			dim(net1) <- c(length(net1)/2, 2)#
+			net0 <- rbind(net0, net1)#
+		}#
+	}
+dim(net0)
+net0 <- unique(net0)
+dim(net0)
+250*0.7
+175+102.52
+175+81.08
+256.08 - 23.1
+200 + 81.08 -23.1
+257.98/2
+200 + 81.08 -23.1
+257.98/2
+308-50

@@ -83,7 +83,7 @@ getPersonalNet2 <- function(fc, gSym, rootGenes){
 	return(net1)
 }
 
-
+# ...
 getPersonalNet1 <- function(fc, gSym){
 	
 	options(warn = -1)
@@ -111,7 +111,99 @@ getPersonalNet1 <- function(fc, gSym){
 	return(net1)
 }
 
-linkNodes1 <- function(gTmp, recTmp, tfTmp){
+# ...
+getPersonalNet1t <- function(fc, gSym){
+	
+	options(warn = -1)
+	library(igraph)
+	net0 <- matrix('test', 1, 2)
+
+	pathwayKegg <- getKeggNet2()
+	nPathway <- length(pathwayKegg)
+
+	eKegg <- getKeggNet1(gSym)
+	eKegg <- eKegg[,c(1,2)]  #only source/target information
+	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges
+
+	nKegg <- union(eKegg[,1], eKegg[,2]) 
+
+	nTar <- 3; T0 <- 2.0; beta1 <- 6;
+
+	tf1 <- getActiveTF4(fc, gSym, nTar, T0)
+	tf1 <- nKegg[nKegg %in% tf1]
+	if (length(tf1) < 1){
+		return(net0)
+	}
+
+	#get the root genes:
+	rootGenes <- read.table('./rootGenes.txt', header=F)
+	rootGenes <- as.character(rootGenes[[1]])
+	rootGenes <- nKegg[nKegg %in% rootGenes]
+
+	if (length(rootGenes) < 1){
+		return(net0)
+	}
+
+	net0 <- matrix('test', 1, 2)
+	vS <- 1.0/fc  # reverse of fold change;
+	
+	for (j in 1:nPathway){
+		print(j)
+		gTmp <- pathwayKegg[[j]]
+		gTmp <- setEdgeWeight1(gTmp, gSym, vS, beta1)
+
+		nodeTmp <- V(gTmp)$name
+		root0 <- intersect(rootGenes, nodeTmp)
+		tf0 <- intersect(tf1, nodeTmp) 
+		if (length(root0) < 1 | length(tf0)<1){
+			next
+		}
+
+		net1 <- linkNodes1(gTmp, root0, tf0)
+		if (length(net1) > 1){
+			dim(net1) <- c(length(net1)/2, 2)
+			net0 <- rbind(net0, net1)
+		}
+	}
+	if (length(net0) < 3){
+		next
+	}
+	net0 <- net0[-1, ]
+	net0 <- unique(net0)
+	# display the net1
+	return(net0)
+}
+
+setEdgeWeight1 <- function(gTmp, gSym1, vS, beta1){
+	# set weight to gTmp
+	v1 <- V(gTmp)$name
+	eHead <- v1[head_of(gTmp, E(gTmp))]
+	eTail <- v1[tail_of(gTmp, E(gTmp))]
+
+	nE1 <- length(eHead)
+	wE <- rep(1.1, nE1)
+
+	for (ne in 1:nE1){
+		x1 <- eHead[ne]
+		x2 <- eTail[ne]
+		y1 <- which(gSym1 %in% x1)
+		y2 <- which(gSym1 %in% x2)
+
+		if (length(y1) == 0 | length(y2) == 0){
+			next
+		} else {
+			wE[ne] <- ((vS[y1])^beta1 + (vS[y2])^beta1)/2
+		}
+	}
+	vt <- mean(wE)
+	wE[wE == 1.1] <- vt
+	E(gTmp)$weight <- wE
+	#get.edge.attribute(gTmp, "weight")
+	return(gTmp)
+}
+
+# ...
+linkNodes2 <- function(gTmp, recTmp, tfTmp){
 	#library(igraph)
 	
 	vTmp <- V(gTmp)$name
@@ -124,8 +216,7 @@ linkNodes1 <- function(gTmp, recTmp, tfTmp){
 		paths <- get.shortest.paths(gTmp, recTmp[j], tfTmp, mode='out')
 		paths <- paths$vpath 
 		nPath <- length(paths)
-		
-		
+				
 		if (nPath > 0){
 			for (k in 1:nPath){
 				pt <- paths[[k]]
@@ -147,6 +238,92 @@ linkNodes1 <- function(gTmp, recTmp, tfTmp){
 	return(pathTmp)
 }
 
+# ...
+linkNodes1 <- function(gTmp, recTmp, tfTmp){
+	#library(igraph)
+	
+	vTmp <- V(gTmp)$name
+	nPath1 <- 0
+	pathTmp <- matrix('test', 1,2)
+	vt <- matrix('test', 1,2)
+
+	nRecTmp <- length(recTmp)
+	for (j in 1:nRecTmp){
+		paths <- get.shortest.paths(gTmp, recTmp[j], tfTmp, mode='out')
+		paths <- paths$vpath 
+		nPath <- length(paths)
+				
+		if (nPath > 0){
+			for (k in 1:nPath){
+				pt <- paths[[k]]
+				pt <- pt$name
+				nPt <- length(pt)
+				if (nPt < 2){
+					next	
+				}
+				
+				for (l in 1:(nPt-1)){
+					#vt <- vTmp[c(pt[l], pt[l+1])]
+					vt <- c(pt[l], pt[l+1])
+					pathTmp <- rbind(pathTmp, vt) 	
+				}
+			}
+		}
+	}
+	pathTmp <- pathTmp[-1,]
+	return(pathTmp)
+}
+
+# ...
+getKeggNet2 <- function(){
+	library(org.Hs.eg.db)
+	library(graphite)
+	library(igraph)	
+	
+	entrezId <- names(as.list(org.Hs.egSYMBOL[]))
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol
+
+	eSymbol <- list()
+	
+	for (i in 1:length(kegg)){
+		# print(i)
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'
+		e1 <- as.matrix(kegg[[i]]@edges)
+		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]
+
+		dim(e1) <- c(length(e1)/4, 4)
+
+		e1[,1] <- unlist(as.list(org.Hs.egSYMBOL[e1[,1]]))
+		e1[,2] <- unlist(as.list(org.Hs.egSYMBOL[e1[,2]]))
+		
+		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed
+		if (length(e2) > 0){
+			dim(e2) <- c(length(e2)/4, 4)
+			e2=e2[,c(2:1,3:4)]	
+			e1 <- rbind(e1, e2)
+		}
+		eSymbol[[i]] <- e1[!duplicated(e1),]
+	}
+	
+	names(eSymbol)=names(kegg)
+
+	n1 <- length(eSymbol)
+	pathwayKegg <- {}  # 'Null'
+
+	for (i in 1:n1){
+		e1 <- eSymbol[[i]]
+		dim(e1) <- c(length(e1)/4, 4)
+		e1 <- e1[,c(1,2)]  #only source/target information
+		dim(e1) <- c(length(e1)/2, 2)
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges
+		pathwayKegg[[i]] <- gTmp
+	}
+
+	return(pathwayKegg)
+}
+
+# ...
 getKeggNet1 <- function(gSym1){
 	library(org.Hs.eg.db)
 	library(graphite)	

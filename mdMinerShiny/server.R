@@ -108,7 +108,8 @@ shinyServer(function(input, output) {
 	output$drugNetwork <- renderForceNetwork({
 		if (!is.null(input$table_rows_selected)) {
 			drugName = networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1];
-			x = read.table(paste("./drugMoaNets/", as.character(drugName), '.txt'));
+			print(drugName)
+			x = read.table(paste("./drugMoaNets/", as.character(drugName), '.txt', sep=''));
 
 			sourceName = x[, 1];
 			targetName = x[, 2];
