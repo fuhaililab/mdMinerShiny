@@ -193,6 +193,27 @@ shinyServer(function(input, output) {
 		}
 	)
 	
+	#output$downloadData1 <-  downloadHandler(
+	#  filename = function() {paste("Patient Drug Merged Network Table", ".csv", sep="")},
+	#  content = function(file) {
+	 #   write.csv(, file, row.names=F)
+	#  }
+#	)
+	
+	output$downloadData2 <-  downloadHandler(
+	  filename = function() {paste("Patient Network Table", ".csv", sep="")},
+	  content = function(file) {
+	    write.csv(networkAndDrugScore()$network, file, row.names=F)
+	  }
+	)
+	
+#	output$downloadData3 <-  downloadHandler(
+	#  filename = function() {paste("Drug Network Table", ".csv", sep="")},
+	#  content = function(file) {
+	#    write.csv(, file, row.names=F)
+	 # }
+#)
+	
 	# output$downloadData <- downloadHandler(
 	# 	filename = function() {
 	# 		paste(input$cancerType, '_', input$dataType, '.txt', sep='')

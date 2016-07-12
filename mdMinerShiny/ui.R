@@ -19,19 +19,18 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         #width = 450,
         fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
                   accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
-        tags$h5("Click to Download the Top Drug Suggestions Table"),
-        downloadButton('downloadData', 'Download')
+        tags$h5("Network")
       ),
       dashboardBody( 
         fluidRow(
-          box(title=tags$b("Top Drug Suggestions"), value = tags$p(style = "font-size: 10px;", tags$b()),  solidHeader= TRUE,collapsible = TRUE,  status = "info", DT::dataTableOutput("table", width = 924, height = 200), width =12)
+          box(title=tags$b("Top Drug Suggestions", downloadButton('downloadData', 'Download')), value = tags$p(style = "font-size: 10px;", tags$b()),  solidHeader= TRUE,collapsible = TRUE,  status = "info", DT::dataTableOutput("table"), width =12)
           ),
         fixedRow(
-          box(title=tags$b("Patient and Drug Merged Netowrk"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12, verbatimTextOutput("text"), forceNetworkOutput("mergeNetwork", height = 400, width = 900))
+          box(title=tags$b("Patient and Drug Merged Netowrk", downloadButton('downloadData1', 'Download')), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12, verbatimTextOutput("text"), forceNetworkOutput("mergeNetwork"))
         ),
         fluidRow(
-          box(title=tags$b("Patient Information and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("patientNetwork", height = 400, width = 400)),
-          box(title=tags$b("Drug Suggestion and Gene Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("drugNetwork", height = 400, width = 400))
+          box(title=tags$b("Patient Information and Gene Network", downloadButton('downloadData2', 'Download')), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, status = "primary", forceNetworkOutput("patientNetwork")),
+          box(title=tags$b("Drug Suggestion and Gene Network", downloadButton('downloadData3', 'Download')), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE, forceNetworkOutput("drugNetwork"))
           )
         # fixedRow(
         #   column(6,
