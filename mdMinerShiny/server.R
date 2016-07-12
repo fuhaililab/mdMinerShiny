@@ -61,14 +61,20 @@ shinyServer(function(input, output) {
 			gSym <- as.character(foldChangePC[, 1])	
 			fc <- as.numeric(foldChangePC[, 2])
 			x <- getPersonalNet1(fc, gSym)
-			y <- getRepositionDrugs(x, 20)
+			y <- getRepositionDrugs(x, 200)
 			Drug <- y[, 1]
 			Score <- y[, 2]
 			drugAndScore <- data.frame(Drug, Score)
 			return(list(network = x, drugAndScore = drugAndScore))
 		}
 	})
-	
+
+	drugNameAndNetwork <- reactive({
+		drugName <- networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1]
+		drugNetwork <- read.table(paste("./drugMoaNets/", as.character(drugName), '.txt', sep=''))
+		return(list(drugName = drugName, drugNetwork = drugNetwork))	
+	})
+
 	output$patientNetwork <- renderForceNetwork({
 	  #   inFile <- input$file1;
 	  #   if (!is.null(inFile)) {	    	
@@ -108,10 +114,7 @@ shinyServer(function(input, output) {
 
 	output$drugNetwork <- renderForceNetwork({
 		if (!is.null(input$table_rows_selected)) {
-			drugName = networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1];
-			print(drugName)
-			x = read.table(paste("./drugMoaNets/", as.character(drugName), '.txt', sep=''));
-
+			x = drugNameAndNetwork()$drugNetwork;
 			sourceName = x[, 1];
 			targetName = x[, 2];
 			name = unique(c(as.character(sourceName), as.character(targetName)));
@@ -151,13 +154,11 @@ shinyServer(function(input, output) {
 			# group[match(('CREBBP'), name)] = 2;
 			# group[match(('ATF4'), name)] = 3;
 			if (!is.null(input$table_rows_selected)) {
-				drugName = networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1];
-				drugNetwork = read.table(paste("./drugMoaNets/", as.character(drugName), '.txt', sep=''));
+				drugNetwork = drugNameAndNetwork()$drugNetwork;
 				sourceNameInDrugNetwork = drugNetwork[, 1];
 				targetNameInDrugNetwork = drugNetwork[, 2];
 				nameInDrugNetwork = unique(c(as.character(sourceNameInDrugNetwork), as.character(targetNameInDrugNetwork)));
 				overlap = intersect(name, nameInDrugNetwork);
-				print(length(overlap));
 				if (length(overlap) > 0) {
 					for (i in 1:length(overlap)) {
 						group[match((as.character(overlap[i])), name)] = 2;
@@ -193,12 +194,12 @@ shinyServer(function(input, output) {
 		}
 	)
 	
-	#output$downloadData1 <-  downloadHandler(
-	#  filename = function() {paste("Patient Drug Merged Network Table", ".csv", sep="")},
-	#  content = function(file) {
-	 #   write.csv(, file, row.names=F)
-	#  }
-#	)
+	output$downloadData1 <-  downloadHandler(
+	 filename = function() {paste("Patient Drug Merged Network Table", ".csv", sep="")},
+	 content = function(file) {
+	   write.csv(networkAndDrugScore()$network, file, row.names=F)
+	 }
+	)
 	
 	output$downloadData2 <-  downloadHandler(
 	  filename = function() {paste("Patient Network Table", ".csv", sep="")},
@@ -207,12 +208,14 @@ shinyServer(function(input, output) {
 	  }
 	)
 	
-#	output$downloadData3 <-  downloadHandler(
-	#  filename = function() {paste("Drug Network Table", ".csv", sep="")},
-	#  content = function(file) {
-	#    write.csv(, file, row.names=F)
-	 # }
-#)
+	output$downloadData3 <-  downloadHandler(
+		filename = function() {
+			paste("Drug Network Table for ", drugNameAndNetwork()$drugName, ".csv", sep="")
+		},
+		content = function(file) {
+   			write.csv(drugNameAndNetwork()$drugNetwork, file, row.names=F);
+	 	}
+	)
 	
 	# output$downloadData <- downloadHandler(
 	# 	filename = function() {
