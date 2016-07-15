@@ -19,7 +19,11 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         #width = 450,
         fileInput('file1',tags$h5("Choose Patient Fold Change Data"), 
                   accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
-        tags$h5("App Description")
+        selectInput("networkType", "Choose A Network Type:", 
+                  choices = c("Patient-specific Network", "Drug Network", "Patient-drug Merge Network")),
+        tags$h5("App Description"),
+        tags$h5("Upload fold change data of a patient in .txt file. Drug suggestion will be generated in descendeing order.
+              Click the drug you want in the table to display drug network and merge network. Click the title of each block to download corresponding data.")
       ),
       dashboardBody( 
         fluidRow(
