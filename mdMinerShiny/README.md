@@ -6,4 +6,5 @@ wDir <- c('/Users/li150/FHLosu/gitRepository1/')
 setwd(wDir)
 library(shiny)
 runApp('./mdMinerShiny')
+This is a browser updated git readme
 
