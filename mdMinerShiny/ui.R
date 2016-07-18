@@ -23,14 +23,15 @@ shinyUI(fluidPage(theme = "bootstrap.css",
                   choices = c("Patient-specific Network", "Drug Network", "Patient-drug Merge Network")),
         tags$h5("App Description"),
         tags$h5("Upload fold change data of a patient in .txt file. Drug suggestion will be generated in descendeing order.
-              Click the drug you want in the table to display drug network and merge network. Click the title of each block to download corresponding data.")
+              Click the drug you want in the table to display drug network and merge network. Click the title of each block to download corresponding data.
+              Choose a specific network to display the network in the big window.")
       ),
       dashboardBody( 
         fluidRow(
           box(title=downloadButton('downloadData', tags$b("Top Drug Suggestions")), value = tags$p(style = "font-size: 10px;", tags$b()),  solidHeader= TRUE,collapsible = TRUE,  status = "info", DT::dataTableOutput("table"), width =12)
           ),
         fixedRow(
-          box(title=downloadButton('downloadData0', tags$b("Patient and Drug Merged Netowrk")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12, verbatimTextOutput("text"), forceNetworkOutput("selectedNetwork"))
+          box(title="Chosen Displayed Network", value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, status = "primary", collapsible = TRUE,width =12, verbatimTextOutput("text"), forceNetworkOutput("selectedNetwork"))
         ),
         fluidRow(
           box(title=downloadButton('downloadData1', tags$b("Patient Information and Gene Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, status = "primary", forceNetworkOutput("patientNetwork")),
