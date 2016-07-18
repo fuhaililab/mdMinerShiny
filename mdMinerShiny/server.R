@@ -186,7 +186,7 @@ shinyServer(function(input, output) {
 	
 	output$selectedNetwork <- renderForceNetwork({
 		if (!is.null(input$networkType)) {
-			if (input$networkType == "patientNetwork") {
+			if (identical(input$networkType, "Patient-specific Network")) {
 				if (!is.null(networkAndDrugScore())) {
 					x = networkAndDrugScore()$network;
 					sourceName = x[, 1];
@@ -215,7 +215,7 @@ shinyServer(function(input, output) {
 					            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);			
 				}			
 			}
-			if (input$networkType == "drugNetwork") {
+			else if (identical(input$networkType, "Drug Network")) {
 				if (!is.null(input$table_rows_selected)) {
 					x = drugNameAndNetwork()$drugNetwork;
 					sourceName = x[, 1];
@@ -244,7 +244,7 @@ shinyServer(function(input, output) {
 					            linkDistance = 100, opacity = 1, opacityNoHover = 1, charge = -100, zoom = TRUE);			
 				}			
 			}
-			if (input$networkType == "mergeNetwork") {
+			else if (identical(input$networkType, "Patient-drug Merge Network")) {
 				if (!is.null(networkAndDrugScore())) {
 					x = networkAndDrugScore()$network;
 					sourceName = x[, 1];
