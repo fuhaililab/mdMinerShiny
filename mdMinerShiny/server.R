@@ -54,19 +54,29 @@ shinyServer(function(input, output) {
 	# )
 
 	networkAndDrugScore <- reactive({
+	  withProgress(message = 'Configuring Drug Table', {
+	    n=5
+	    for (j in 1:n) {
 	    inFile <- input$file1
-	    if (!is.null(inFile)) {	    	
-			foldChangePC <- read.table(inFile$datapath)
-			foldChangePC <- as.matrix(foldChangePC)
-			gSym <- as.character(foldChangePC[, 1])	
-			fc <- as.numeric(foldChangePC[, 2])
-			x <- getPersonalNet1(fc, gSym)
-			y <- getRepositionDrugs(x, 200)
-			Drug <- y[, 1]
-			Score <- y[, 2]
-			drugAndScore <- data.frame(Drug, Score)
-			return(list(network = x, drugAndScore = drugAndScore))
-		}
+	    if (!is.null(inFile)) {	
+	    foldChangePC <- read.table(inFile$datapath)
+	    foldChangePC <- as.matrix(foldChangePC)
+	    gSym <- as.character(foldChangePC[, 1])	
+	    incProgress(1/n, detail = paste(1, '/', n))
+	    fc <- as.numeric(foldChangePC[, 2])
+	    incProgress(1/n, detail = paste(2, '/', n))
+	    x <- getPersonalNet1(fc, gSym)
+	    incProgress(1/n, detail = paste(3, '/', n))
+	    y <- getRepositionDrugs(x, 20)
+	    incProgress(1/n, detail = paste(4, '/', n))
+	    Drug <- y[, 1]
+	    incProgress(1/n, detail = paste(5, '/', n))
+	    Score <- y[, 2]
+	    drugAndScore <- data.frame(Drug, Score)
+	    return(list(network = x, drugAndScore = drugAndScore))
+	    }
+	    }
+	  })
 	})
 
 	drugNameAndNetwork <- reactive({
