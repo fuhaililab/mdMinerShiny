@@ -340,7 +340,7 @@ shinyServer(function(input, output) {
 	# )
 
 	output$text <- renderPrint(
-		paste('You Choose Drug: ', networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1], sep='')
+		paste('Chosen Drug: ', networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1], sep='')
 	)
 })
 
