@@ -7,22 +7,23 @@ setwd(wDir)
 library(shiny)
 runApp('./mdMinerShiny')
 
-{ font-size: @ui-font-size; }**mdMiner-The Ohio State University**
+**mdMiner-The Ohio State University**
 
 mdMiner is an application for predicting drugs and drug combinations for individual cancer patients using their genomic data.
  
 **Installing** 
 
-1) Download the latest version of **RStudio** and **RShiny**.
-
+1) Download the latest version of *RStudio* and *RShiny*.
 http://www.rstudio.com/products/rstudio/download/preview/
 
 https://www.rstudio.com/products/shiny-2/
 
-2) Install **ShinyDashboard** package by typing the following command on the R console.  
+2) Install *ShinyDashboard* package by typing the following command on the R console.  
 install.packages("shinydashboard") 
 
-3) Install networkD3 using the command 
+3) Install RCurl package. install.packages("RCurl")
+
+4) Download networkD3 https://cran.r-project.org/web/packages/networkD3/index.html
 
 4) Install DT by typing the following command on the R console. 
 
