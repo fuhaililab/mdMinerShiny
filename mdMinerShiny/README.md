@@ -7,6 +7,7 @@ setwd(wDir)
 library(shiny)
 runApp('./mdMinerShiny')
 
+**mdMiner-The Ohio State University**
 mdMiner is an application for predicting drugs and drug combinations for individual cancer patients using their genomic data. 
 
 **Installing**
