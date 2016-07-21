@@ -9,7 +9,8 @@ runApp('./mdMinerShiny')
 
 **mdMiner-The Ohio State University**
 
-mdMiner is an application for predicting drugs and drug combinations for individual cancer patients using their genomic data.
+mdMiner is an innovative web application that uses machine learning approaches to predict the best drugs and drug combinations for individual cancer patients using their genomic data.
+
  
 **Installing** 
 
@@ -39,4 +40,8 @@ biocLite("graphite”)
  install.packages("igraph")
  
 *Instructions*
-Upload fold change data of a patient in a .txt file format. Drug suggestions will be generated in descending order. Click the desired drug  in the table to display drug network and merge network. The networks display genetic and drug data. Click the title of each block to download corresponding data.
+
+Click on the *Choose File* button and upload fold change data of a patient in a .txt file format. 
+Drug suggestions will be generated in descending order. 
+Click the desired drug  in the table to display drug network, gene network and the merge network. 
+Click the title of each block to download corresponding data.
