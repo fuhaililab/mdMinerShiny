@@ -23,7 +23,7 @@ install.packages("shinydashboard")
 
 3) Install *RCurl* package. install.packages("RCurl")
 
-4) Download *networkD3* https://cran.r-project.org/web/packages/networkD3/index.html
+4) Install *networkD3* https://cran.r-project.org/web/packages/networkD3/index.html
 
 4) Install *DT* by typing the following command on the R console. 
 if (!require("DT")) install.packages('DT')
