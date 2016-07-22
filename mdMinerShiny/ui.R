@@ -36,9 +36,9 @@ shinyUI(fluidPage(theme = "bootstrap.css",
           box(title=tags$b("Chosen Displayed Network"), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE,width =12, verbatimTextOutput("text"), forceNetworkOutput("selectedNetwork", width=1000))
         ),
         fluidRow(
-          box(title=downloadButton('downloadData1', tags$b("Patient Information and Gene Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, forceNetworkOutput("patientNetwork", width = 550)),
-          box(title=downloadButton('downloadData2', tags$b("Drug Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE,  forceNetworkOutput("drugNetwork", width = 550)),
-          box(title=downloadButton('downloadData3', tags$b("Drug Suggestion and Gene Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, forceNetworkOutput("mergeNetwork", width = 550))
+          box(title=downloadButton('downloadData1', tags$b("Patient Information and Gene Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, forceNetworkOutput("patientNetwork", width = 400)),
+          box(title=downloadButton('downloadData2', tags$b("Drug Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE,  forceNetworkOutput("drugNetwork", width = 400)),
+          box(title=downloadButton('downloadData3', tags$b("Drug Suggestion and Gene Network")), value = tags$p(style = "font-size: 10px;"), solidHeader= TRUE, collapsible = TRUE, forceNetworkOutput("mergeNetwork", width = 400))
           )
         # fixedRow(
         #   column(6,
