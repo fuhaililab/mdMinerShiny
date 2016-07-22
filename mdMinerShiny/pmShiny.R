@@ -275,6 +275,80 @@ linkNodes1 <- function(gTmp, recTmp, tfTmp){
 }
 
 # ...
+getKeggNet3 <- function(){
+	library(org.Hs.eg.db)
+	library(graphite)
+	library(igraph)	
+	
+	entrezId <- names(as.list(org.Hs.egSYMBOL[]))
+    eEntrez=lapply(kegg,function(x){return(nodes(x))})
+	nSymbol=lapply(eEntrez,function(x){x=intersect(x,entrezId);unlist(as.list(org.Hs.egSYMBOL[x]))})  # node symbol
+
+	eSymbol <- list()
+	
+	for (i in 1:length(kegg)){
+		# print(i)
+		# e1 <- as.matrix(edges(kegg[[i]]))  # check the 'attributes()'
+		e1 <- as.matrix(kegg[[i]]@edges)
+		e1 <- e1[e1[,1] %in% entrezId & e1[,2] %in% entrezId, ]
+
+		dim(e1) <- c(length(e1)/4, 4)
+
+		e1[,1] <- unlist(as.list(org.Hs.egSYMBOL[e1[,1]]))
+		e1[,2] <- unlist(as.list(org.Hs.egSYMBOL[e1[,2]]))
+		
+		e2 <- e1[e1[,3] == "undirected",]  # convert 'undirected' to directed
+		if (length(e2) > 0){
+			dim(e2) <- c(length(e2)/4, 4)
+			e2=e2[,c(2:1,3:4)]	
+			e1 <- rbind(e1, e2)
+		}
+		eSymbol[[i]] <- e1[!duplicated(e1),]
+	}
+	
+	names(eSymbol)=names(kegg)
+	
+	# add newest KEGG pathways
+	ras=read.delim("./code/Ras signaling pathway.txt",header=F)
+	tnf=read.delim("./code/tnf signaling pathway.txt",header=F)
+	Rap1=read.delim("./code/Rap1 signaling pathway.txt",header=F)
+	FoxO=read.delim("./code/FoxO signaling pathway.txt",header=F)
+	cGMP=read.delim("./code/cGMP signaling pathway.txt",header=F)
+	AMPK=read.delim("./code/AMPK signaling pathway.txt",header=F)
+
+	add_path=c("ras","tnf","Rap1","FoxO","cGMP","AMPK")
+
+	nPathway <- length(eSymbol)
+	for (i in 1:6){
+		eSymbol[[nPathway + i]]=as.matrix(get(add_path[i]))[,1:4]
+		names(eSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+		nSymbol[[nPathway +i]]=unique(as.vector(as.matrix(get(add_path[i]))[,1:2]))
+		names(nSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+	}
+
+	n1 <- length(eSymbol)
+	pathwayKegg <- {}  # 'Null'
+
+	for (i in 1:n1){
+		e1 <- eSymbol[[i]]
+		dim(e1) <- c(length(e1)/4, 4)
+		e1 <- e1[,c(1,2)]  #only source/target information
+		dim(e1) <- c(length(e1)/2, 2)
+		gTmp <- graph.edgelist(e1)  # build the background network with kegg edges
+		pathwayKegg[[i]] <- gTmp
+	}
+	
+	e1 <- eSymbol[[1]]
+	for (i in 2:n1){
+		e1 <- rbind(e1, eSymbol[[i]])
+	}
+
+	resData <- list(x=pathwayKegg, y=e1)
+	return(resData)
+}
+
+
+# ...
 getKeggNet2 <- function(){
 	library(org.Hs.eg.db)
 	library(graphite)
@@ -307,6 +381,24 @@ getKeggNet2 <- function(){
 	}
 	
 	names(eSymbol)=names(kegg)
+	
+	# add newest KEGG pathways
+	ras=read.delim("./Ras signaling pathway.txt",header=F)
+	tnf=read.delim("./tnf signaling pathway.txt",header=F)
+	Rap1=read.delim("./Rap1 signaling pathway.txt",header=F)
+	FoxO=read.delim("./FoxO signaling pathway.txt",header=F)
+	cGMP=read.delim("./cGMP signaling pathway.txt",header=F)
+	AMPK=read.delim("./AMPK signaling pathway.txt",header=F)
+
+	add_path=c("ras","tnf","Rap1","FoxO","cGMP","AMPK")
+
+	nPathway <- length(eSymbol)
+	for (i in 1:6){
+		eSymbol[[nPathway + i]]=as.matrix(get(add_path[i]))[,1:4]
+		names(eSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+		nSymbol[[nPathway +i]]=unique(as.vector(as.matrix(get(add_path[i]))[,1:2]))
+		names(nSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+	}
 
 	n1 <- length(eSymbol)
 	pathwayKegg <- {}  # 'Null'
@@ -355,6 +447,24 @@ getKeggNet1 <- function(gSym1){
 	}
 	
 	names(eSymbol)=names(kegg)
+
+	# add newest KEGG pathways
+	ras=read.delim("./Ras signaling pathway.txt",header=F)
+	tnf=read.delim("./tnf signaling pathway.txt",header=F)
+	Rap1=read.delim("./Rap1 signaling pathway.txt",header=F)
+	FoxO=read.delim("./FoxO signaling pathway.txt",header=F)
+	cGMP=read.delim("./cGMP signaling pathway.txt",header=F)
+	AMPK=read.delim("./AMPK signaling pathway.txt",header=F)
+
+	add_path=c("ras","tnf","Rap1","FoxO","cGMP","AMPK")
+
+	nPathway <- length(eSymbol)
+	for (i in 1:6){
+		eSymbol[[nPathway + i]]=as.matrix(get(add_path[i]))[,1:4]
+		names(eSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+		nSymbol[[nPathway +i]]=unique(as.vector(as.matrix(get(add_path[i]))[,1:2]))
+		names(nSymbol)[nPathway + i]=as.matrix(get(add_path[i]))[1,5]
+	}
 
 	n1 <- length(eSymbol)
 	e1 <- eSymbol[[1]]
