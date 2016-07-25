@@ -1,1 +1,1 @@
-SP3	CD14
+REL	IFNG

@@ -11,4 +11,4 @@ Rac1	Traf6
 Traf6	Ubc
 Ubc	Dlg4
 Dlg4	PAX6
-TFAP2A	HMOX1
+PAX6	PDHX

@@ -8,4 +8,3 @@ Bcr	Rac1
 Rac1	Mapk1
 Mapk1	TP53
 TP53	EGR1
-SP3	CYP1A1

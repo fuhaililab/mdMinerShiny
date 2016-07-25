@@ -9,4 +9,4 @@ Ubqln1	Bcr
 Bcr	Rac1
 Rac1	Mapk1
 Mapk1	TP53
-MITF	TYRP1
+TP53	BAX
