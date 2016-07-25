@@ -9,6 +9,8 @@ runApp('./mdMinerShiny')
 
 **mdMiner-The Ohio State University**
 
+<img src = "img/osulogo.png" alt = ""> 
+
 mdMiner is an innovative web application that uses machine learning approaches to predict the best drugs and drug combinations for individual cancer patients using their genomic data.
 
  
