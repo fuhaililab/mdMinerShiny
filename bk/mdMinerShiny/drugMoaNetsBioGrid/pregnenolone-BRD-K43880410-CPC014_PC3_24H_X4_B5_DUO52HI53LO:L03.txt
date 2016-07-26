@@ -1,0 +1,2 @@
+TP53	FAS
+SP1	TPI1
