@@ -4,7 +4,6 @@ library(DT)
 
 shiny.maxRequestSize=30*1024^2
 
-source("./Module_A.R");
 source("./pmshiny.R");
 shinyServer(function(input, output) {
 	# RNASeq <- reactive({
@@ -67,7 +66,7 @@ shinyServer(function(input, output) {
 	    incProgress(1/n, detail = paste(2, '/', n))
 	    x <- getPersonalNet1(fc, gSym)
 	    incProgress(1/n, detail = paste(3, '/', n))
-	    y <- getRepositionDrugs(x, 20)
+	    y <- getRepositionDrugs(x, 100)
 	    incProgress(1/n, detail = paste(4, '/', n))
 	    Drug <- y[, 1]
 	    incProgress(1/n, detail = paste(5, '/', n))
@@ -81,7 +80,9 @@ shinyServer(function(input, output) {
 
 	drugNameAndNetwork <- reactive({
 		drugName <- networkAndDrugScore()$drugAndScore[as.numeric(input$table_rows_selected), 1]
-		drugNetwork <- read.table(paste("./drugMoaNets/", as.character(drugName), '.txt', sep=''))
+		print('loading drugnetwork')
+		drugNetwork <- read.table(paste("./drugMoaNetsUsing/", as.character(drugName), '.txt', sep=''))
+		print('load drug network successfully!')
 		return(list(drugName = drugName, drugNetwork = drugNetwork))	
 	})
 

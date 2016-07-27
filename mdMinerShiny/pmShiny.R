@@ -1,29 +1,83 @@
-# for debuging: 
-if (1 == 2){
-	wDir <- c('/Users/li150/FHLosu/gitRepository1/mdMinerShiny/')
+# Fuhai Li's lab; FuhaiLi@osumc.edu; Robert.fh.li@gmail.com;
+if (1 == 2){  # How To: Run Shiny App
+	dir1 <- c('/Users/li150/FHLosu/Projects/Shiny')
+	setwd(dir1)
+	library('shiny')
+	runApp("mdMinerShiny")
+}
+
+if (1 == 2){  # required R packages/libraries
+	library(shiny)
+	library(networkD3)
+	library(DT)
+	library(igraph)
+}
+
+if (1 == 2){  # for debuging: 
+	wDir <- c('/Users/li150/FHLosu/Projects/Shiny/mdMinerShiny/')
 	setwd(wDir)
-	f1 <- c("./foldchangePc3.txt")
+	source('./pmShiny.R')
+	f1 <- c("./dataDemo/foldchangePc3.txt")
 	x1 <- read.table(f1, header=F, sep='\t')  # x1 variable has the data
 	x1 <- as.matrix(x1)  # conver the list format into matrix format
 
 	gSym <- as.character(x1[,1])  # get the gene Symbols
 	fc <- as.numeric(x1[,2])  # get the value of fold change
 	x = getPersonalNet1(fc, gSym);
-
 }
 
 # 1) install R packages
-library(org.Hs.eg.db)
-library(graphite)
-#library(igraph)
+# library(org.Hs.eg.db)
+# library(graphite)
+# library(igraph)
 
 # 2) read in the fold change data
 # f1 <- c("path to fold change file/file name")  # fiel name: for example: 
 
-#fDrugMoa <- c('./drugMoaNets/')
+
+# interface-1:
+getPersonalNet1 <- function(fc, gSym){  # it is used an interface
+	f1 <- c('./DiseaseGenes/DiseaseGenesProstate.txt')
+	rootGenes <- read.table(f1, sep='\t')
+	rootGenes <- as.character(rootGenes[[1]])
+	
+	f1 <- c('./dataCommon/tfTarget.txt')
+	tfTar0 <- read.table(f1, header=F, sep='\t')
+	tfTar0 <- as.matrix(tfTar0)
+
+	net1 <- getPersonalNetBioGrid1(fc, gSym, rootGenes, tfTar0)
+	return(net1)
+}
+
+# interface-2:
 getRepositionDrugs <- function(netPatient, n1){
+	dir1 <- c("./drugMoaNetsUsing/")
+	# dir1 <- c("./drugMoaNetsBioGridPrestwick402/")  #402 drugs in both lincs and prestwick+cliff'lab= in total 1398 drugs
+	drugList <- dir(dir1)
+	drugName <- gsub('.txt', '', drugList)
+	nDrug <- length(drugList)
+
+	ds <- rep(-1.0, nDrug)
+	for (i in 1:nDrug){
+		netDrug <- read.table(paste(dir1, drugList[i], sep='/'), header=F, sep='\t')
+		ds[i] <- getDrugRepositionScore(netPatient, netDrug)
+	}
+	idx <- order(ds, decreasing=T)
+	ds <- ds[idx]
+	drugName <- drugName[idx]
+
+	n1 <- min(n1, nDrug)
+	dat <- cbind(drugName[1:n1], ds[1:n1])
+
+	return(dat)  # drug name + score of sensitivity
+}
+
+
+
+#fDrugMoa <- c('./drugMoaNets/')
+getRepositionDrugsV2 <- function(netPatient, n1){
 	#dir1 <- c("/Users/li150/FHLosu/Projects/lincs/drugMoaNets/")
-	dir1 <- c("./drugMoaNets/")
+	dir1 <- c("./drugMoaNetsUsing/")
 	drugList <- dir(dir1)
 	drugName <- gsub('.txt', '', drugList)
 	nDrug <- length(drugList)
@@ -50,8 +104,34 @@ getDrugRepositionScore <- function(netPatient, netDrug){
 	return(s)
 }
 
+# sub-func: 
+# sub-func: 048
+removeDoubleEdge <- function(net1){  # remove the double-edge in the driver signaling network (i.e., A->B, and B->A)
 
+	nEdge <- dim(net1)[1]
+	idx1 <- rep(FALSE, nEdge)
 
+	for (i in 1:(nEdge-1)){
+		a1 <- net1[i,1]
+		b1 <- net1[i,2]
+		for (j in (i+1):nEdge){
+			a2 <- net1[j,2]
+			b2 <- net1[j,1]
+			if (a1 == a2 & b1 == b2){
+				idx1[j] <- TRUE
+			}
+		}
+	}
+	idx2 <- which(idx1 == TRUE)
+	if (length(idx2)>0){
+		net2 <- net1[-idx2, ]
+	} else {
+		net2 <- net1
+	}
+	return(net2)
+}
+
+# sub-func: ....
 getPersonalNet2 <- function(fc, gSym, rootGenes){
 	
 	options(warn = -1)
@@ -84,18 +164,109 @@ getPersonalNet2 <- function(fc, gSym, rootGenes){
 }
 
 # ...
-getPersonalNet1 <- function(fc, gSym){
+getPersonalNetBioGrid1 <- function(fc, gSym, rootGenes, tfTar0){
 	
 	options(warn = -1)
 	library(igraph)
+	
+	f1 <- c("./network/BIOGRID-ALL-3.4.130.tab2-Symbol.txt")
+	bNet.e <- read.table(f1, header=F, sep='\t', colClasses='character')
+	# bNet.e <- bNet.e[,c(1,4)]
+	bNet.e <- as.matrix(bNet.e)
+	bNet.e <- bNet.e[-which(bNet.e[,1] == bNet.e[,2]),]
 
-	eKegg <- getKeggNet1(gSym)
+	eKegg <- bNet.e
+
 	eKegg <- eKegg[,c(1,2)]  #only source/target information
-	gTmp <- graph.edgelist(eKegg)  # build the background network with kegg edges
+	gTmp <- graph.edgelist(eKegg)
 
 	nKegg <- union(eKegg[,1], eKegg[,2]) 
 
-	tf1 <- getActiveTF3(fc, gSym)
+	nTar <- 3; T0 <- 2.0;
+	tf1 <- getActiveTF5(fc, gSym, nTar, T0, tfTar0)
+	tf1 <- nKegg[nKegg %in% tf1]
+	# print(tf1)
+	# tf1 <- tf1[3]
+
+	#get the root genes:
+	# rootGenes <- read.table('./rootGenes.txt', header=F)
+	# rootGenes <- as.character(rootGenes[[1]])
+	rootGenes <- nKegg[nKegg %in% rootGenes]
+	rootGenes <- rootGenes[1:30]
+
+	# get the KEGG background network
+	net1 <- linkNodes1(gTmp, rootGenes, tf1)  #net1 is the network: source (1 column) and target node (2 column)
+
+	# tfTar0 <- read.table('./tfTarget.txt', header=F, sep='\t')
+	# tfTar0 <- as.matrix(tfTar0)
+	
+	tfTar01 <- tfTar0[,1]
+	tfTar02 <- tfTar0[,2]
+
+	idx1 <- which(tfTar01 %in% gSym & tfTar02 %in% gSym)
+	tfTar01 <- tfTar01[idx1]  # intersection with gSym2 in sequence data
+	tfTar02 <- tfTar02[idx1]
+	tfTar0 <- tfTar0[idx1,]
+
+	idx1 <- which(tfTar01 %in% nKegg)
+	tfTar01 <- tfTar01[idx1]  # intersection with KEGG genes
+	tfTar02 <- tfTar02[idx1]
+	tfTar0 <- tfTar0[idx1,]
+
+	aTar <- gSym[fc >= T0]
+	et <- tfTar0[tfTar01 %in% tf1 & tfTar02 %in% aTar, ]
+	dim(et) <- c(length(et)/2, 2)
+	net1 <- rbind(net1, et)
+
+	net1 <- unique(net1)
+	net1 <- removeDoubleEdge(net1)
+
+	if (1 == 2){  # output disease associated genes of prostate cancer
+		f1 <- c('./prostate associated genes 30.txt')
+		x1 <- rootGenes
+		dim(x1) <- c(6, 5)
+		write.table(x1, f1, quote=F, sep='\t')
+
+		f1 <- c('./prostate activated TFs.txt')
+		x1 <- tf1
+		dim(x1) <- c(6, 4)
+		write.table(x1, f1, quote=F, sep='\t')
+
+		f1 <- c('./prostate target genes of activated TFs.txt')
+		x1 <- unique(et[,2])
+		dim(x1) <- c(2, 4)
+		write.table(x1, f1, quote=F, sep='\t')
+
+		f1 <- c('./prostate PC3 KPnet-Sub.txt')
+		x1 <- net1
+		write.table(x1, f1, quote=F, col.names=F, row.names=F, sep='\t')
+
+		# plot the network
+		plotDriverNet2v2(net1, rootGenes, tf1)
+
+	}
+
+	# display the net1
+	return(net1)
+}
+
+# ...
+getPersonalNet1v1 <- function(fc, gSym){
+	
+	options(warn = -1)
+	library(igraph)
+	xt <- getKeggNet3()
+	pathwayKegg <- xt$x
+	nPathway <- length(pathwayKegg)
+
+	eKegg <- xt$y
+	eKegg <- eKegg[,c(1,2)]  #only source/target information
+	gTmp <- graph.edgelist(eKegg)
+
+	nKegg <- union(eKegg[,1], eKegg[,2]) 
+
+	nTar <- 3; T0 <- 2.0;
+	tf1 <- getActiveTF4(fc, gSym, nTar, T0)
 	tf1 <- nKegg[nKegg %in% tf1]
 	tf1 <- tf1[3]
 
@@ -103,9 +274,28 @@ getPersonalNet1 <- function(fc, gSym){
 	rootGenes <- read.table('./rootGenes.txt', header=F)
 	rootGenes <- as.character(rootGenes[[1]])
 	rootGenes <- nKegg[nKegg %in% rootGenes]
+	rootGenes <- rootGenes[1:30]
 
 	# get the KEGG background network
 	net1 <- linkNodes1(gTmp, rootGenes, tf1)  #net1 is the network: source (1 column) and target node (2 column)
+
+	tfTar0 <- read.table('./tfTarget.txt', header=F, sep='\t')
+	tfTar0 <- as.matrix(tfTar0)
+	tfTar01 <- tfTar0[,1]
+	tfTar02 <- tfTar0[,2]
+
+	idx1 <- which(tfTar01 %in% gSym & tfTar02 %in% gSym)
+	tfTar01 <- tfTar01[idx1]  # intersection with gSym2 in sequence data
+	tfTar02 <- tfTar02[idx1]
+
+	idx1 <- which(tfTar01 %in% nKegg)
+	tfTar01 <- tfTar01[idx1]  # intersection with KEGG genes
+	tfTar02 <- tfTar02[idx1]
+
+	aTar <- gSym[fc >= T0]
+	et <- tfTar0[tfTar01 %in% tf0 & tfTar02 %in% aTar, ]
+	dim(et) <- c(length(et)/2, 2)
+	net1 <- rbind(net1, et)
 
 	# display the net1
 	return(net1)
@@ -383,12 +573,12 @@ getKeggNet2 <- function(){
 	names(eSymbol)=names(kegg)
 	
 	# add newest KEGG pathways
-	ras=read.delim("./Ras signaling pathway.txt",header=F)
-	tnf=read.delim("./tnf signaling pathway.txt",header=F)
-	Rap1=read.delim("./Rap1 signaling pathway.txt",header=F)
-	FoxO=read.delim("./FoxO signaling pathway.txt",header=F)
-	cGMP=read.delim("./cGMP signaling pathway.txt",header=F)
-	AMPK=read.delim("./AMPK signaling pathway.txt",header=F)
+	ras=read.delim("./code/Ras signaling pathway.txt",header=F)
+	tnf=read.delim("./code/tnf signaling pathway.txt",header=F)
+	Rap1=read.delim("./code/Rap1 signaling pathway.txt",header=F)
+	FoxO=read.delim("./code/FoxO signaling pathway.txt",header=F)
+	cGMP=read.delim("./code/cGMP signaling pathway.txt",header=F)
+	AMPK=read.delim("./code/AMPK signaling pathway.txt",header=F)
 
 	add_path=c("ras","tnf","Rap1","FoxO","cGMP","AMPK")
 
@@ -476,6 +666,86 @@ getKeggNet1 <- function(gSym1){
 
 }
 
+getActiveTF5 <- function(fc, gSym, nTar, T0, tfTar0, tf1, tar1){
+	
+	# identify the activated TFs
+	idxt1 <- which(gSym %in% tar1)
+	sTar1 <- fc[idxt1] # suppression (negative zscore) for drugs
+	
+	# tf1 <- unique(tfTar0[,1])
+	nTf <- length(tf1)
+	
+	sTf <- rep(0, nTf)  # importance score of TF
+	for (i in 1:nTf){
+		str1 <- tf1[i]  # i-th TF
+		str2 <- tfTar0[tfTar0[,1] == str1, 2]  #targets of given TF
+		idxt2 <- which(tar1 %in% str2)
+		st <- sTar1[idxt2]
+		st1 <- st[order(st, decreasing=T)]
+		nt1 <- min(nTar, length(st1))
+
+		st1 <- st1[1:nt1]
+		sTf[i] <- sum(st1)/nt1	
+	}
+	
+	idxt1 <- order(sTf, decreasing=T)
+	sTf <- sTf[idxt1]
+	tf2 <- tf1[idxt1]
+
+	idx <- which(sTf >= T0)
+	if (length(idx) < 1){
+		idx <- 1
+	}
+
+	tf2 <- tf2[idx]
+	
+	return(tf2)
+}
+
+# sub-functions: ...
+getActiveTF5 <- function(fc, gSym, nTar, T0, tfTar0){
+	
+	# tfTar0 <- read.table('./tfTarget.txt', header=F, sep='\t')
+	# tfTar0 <- as.matrix(tfTar0)
+
+	# identify the activated TFs
+	tar1 <- unique(tfTar0[,2])
+	idxt1 <- which(gSym %in% tar1)
+	tar1 <- gSym[idxt1]  # might be missed by previous versions of getActiveTF...
+	
+	sTar1 <- fc[idxt1] # suppression (negative zscore) for drugs
+	
+	tf1 <- unique(tfTar0[,1])
+	nTf <- length(tf1)
+	
+	sTf <- rep(0, nTf)  # importance score of TF
+	for (i in 1:nTf){
+		str1 <- tf1[i]  # i-th TF
+		str2 <- tfTar0[tfTar0[,1] == str1, 2]  #targets of given TF
+		idxt2 <- which(tar1 %in% str2)
+		st <- sTar1[idxt2]
+		st1 <- st[order(st, decreasing=T)]
+		nt1 <- min(nTar, length(st1))
+
+		st1 <- st1[1:nt1]
+		sTf[i] <- sum(st1)/nt1	
+	}
+	
+	idxt1 <- order(sTf, decreasing=T)
+	sTf <- sTf[idxt1]
+	tf2 <- tf1[idxt1]
+
+	idx <- which(sTf >= T0)
+	if (length(idx) < 1){
+		idx <- 1
+	}
+
+	tf2 <- tf2[idx]
+	
+	return(tf2)
+}
+
+# sub-functions: ...
 getActiveTF4 <- function(fc, gSym, nTar, T0){
 	
 	tfTar0 <- read.table('./tfTarget.txt', header=F, sep='\t')
@@ -484,6 +754,7 @@ getActiveTF4 <- function(fc, gSym, nTar, T0){
 	# identify the activated TFs
 	tar1 <- unique(tfTar0[,2])
 	idxt1 <- which(gSym %in% tar1)
+	tar1 <- gSym[idxt1]  # might be missed by previous versions of getActiveTF...
 	
 	sTar1 <- fc[idxt1] # suppression (negative zscore) for drugs
 	

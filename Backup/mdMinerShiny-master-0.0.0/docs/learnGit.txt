@@ -1,0 +1,25 @@
+	1. Install Git on Mac: Install Xcode from AppStore; Run Xcode; Choose "Xcode"-->"Preferences" --> "Downloads" --> "Command Lines Tools" --> "install"
+	2. Install Git via homebrew: 
+		brew update
+		brew install git
+	3. Configure Git:
+		a. git config --global user.name "Your Name"
+		b. git config --global user.email "email@example.com"
+		
+	4.  Make your own repository
+		Mkdir mdMinerShiny
+		Cd mdMinerShiny
+		Git init
+		
+	5. Create SSH Key to download files from GitHub
+	ssh-keygen -t rsa -C "Your email"
+	(Don't need to input password or file name)
+	You can find the two keys at: ~/.ssh/id_rsa and id_rsa.pub
+	
+	6. Connect to a GitHub repository
+		Send me your id_rsa.pub (which the public rsa key, and I will add it to my GitHub);
+		git clone git@github.com:flyfishli/mdMinerShiny.git   (to get the files from GitHub)
+		
+	7. Link to a GitHub repository
+	git remote add origin git@github.com:flyfishli/mdMinerShiny.git
+
