@@ -1,13 +1,7 @@
 ## <img src="https://www.osu.edu/assets/site/images/osu-logo.png" alt="THE OHIO STATE UNIVERSITY">
 ## Repositioning Drugs for Individual Cancer Patients based on Personal Genomics using Precision Medicine
 
-<<<<<<< HEAD
-<img src="https://www.osu.edu/assets/site/images/osu-logo.png" alt="THE OHIO STATE UNIVERSITY">
-
-### mdMiner is an innovative web application that uses machine learning approaches to predict the best drugs and drug combinations for individual cancer patients using their genomic data. mdMiner is an application developed by Dr. Fuhai Li's lab, Department of Biomedical Informatics, The Ohio State University. 
-=======
 ### mdMiner is an innovative web application that uses machine learning approaches to predict the best drugs and drug combinations for individual cancer patients using their genomic data. mdMiner is an application developed by the Department of Biomedical Informatics at The Ohio State University College of Medicine under the supervision of Dr. Fuhai Li. 
->>>>>>> a6b448b8f0d2c0a4503ce6354a7e9e2af72c54a6
 
  
 ### **Installing**  
@@ -46,7 +40,3 @@ Click the title of each block to download corresponding data.
 #### For any questions, please contact: robert.fh.li@gmail.com.
 #####- Dr. Fuhai Li - Department of Biomedical Informatics, The Ohio State University.
 
-<<<<<<< HEAD
-#### For any questions, please contact: Fuhai Li, FuhaiLi@osumc.edu, or robert.fh.li@gmail.com
-=======
->>>>>>> a6b448b8f0d2c0a4503ce6354a7e9e2af72c54a6
