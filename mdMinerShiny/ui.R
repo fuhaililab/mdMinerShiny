@@ -25,7 +25,7 @@ shinyUI(fluidPage(theme = "bootstrap.css",
         fileInput('file1',tags$h5(tags$b("Choose Patient Fold Change Data")), 
                   accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv')),
         selectInput("networkType", tags$h5(tags$b("Choose A Network Type:")), 
-                  choices = c("Patient-specific Network", "Drug Network", "Patient-drug Merge Network")),
+                  choices = c("Patient-specific Network", "Drug Network", "Patient-drug Merge Network"))
         
         # tags$div("test this is a ag  g agasddf")
         # # sidebarPanel(), 
