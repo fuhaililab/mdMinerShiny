@@ -620,12 +620,12 @@ var getScrollRoot = (function() {
       document.body.appendChild(dummy);
       var bodyScrollTop  = document.body.scrollTop;
       var docElScrollTop = document.documentElement.scrollTop;
-      window.scrollBy(0, 1);
+      window.scrollBy(0, 3);
       if (document.body.scrollTop != bodyScrollTop)
         (SCROLL_ROOT = document.body);
       else 
         (SCROLL_ROOT = document.documentElement);
-      window.scrollBy(0, -1);
+      window.scrollBy(0, -3);
       document.body.removeChild(dummy);
     }
     return SCROLL_ROOT;
@@ -709,7 +709,11 @@ SmoothScroll.destroy = cleanup;
 if (window.SmoothScrollOptions) // async API
     SmoothScroll(window.SmoothScrollOptions)
 
-if ('object' == typeof exports)
+if (typeof define === 'function' && define.amd)
+    define(function() {
+        return SmoothScroll;
+    });
+else if ('object' == typeof exports)
     module.exports = SmoothScroll;
 else
     window.SmoothScroll = SmoothScroll;
