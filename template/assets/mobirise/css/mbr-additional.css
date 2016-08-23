@@ -67,6 +67,12 @@
 #menu-8 .dropdown-item[aria-expanded="true"] {
   color: #c0a375!important;
 }
+#header1-9 P {
+  text-align: left;
+}
+#header1-9 DIV {
+  text-align: left;
+}
 #msg-box5-44 P {
   text-align: left;
 }
@@ -84,6 +90,9 @@
 }
 #form1-11 .mbr-section-title {
   font-size: 46px;
+}
+#form1-11 SMALL {
+  text-align: center;
 }
 #contacts2-4 P {
   text-align: left;
@@ -160,6 +169,9 @@
   text-align: left;
   font-size: 21px;
   font-family: 'Roboto Slab', serif;
+}
+#features3-19 P {
+  text-align: center;
 }
 #contacts2-9 P {
   text-align: left;
@@ -246,6 +258,10 @@
 #content5-38 p {
   color: #fff;
 }
+#content5-38 DIV {
+  color: #ffffff;
+  font-size: 20px;
+}
 #header3-34 .mbr-section-title,
 #header3-34 .mbr-section-subtitle {
   text-align: center;
@@ -330,6 +346,9 @@
 }
 #msg-box8-26 .mbr-section-title {
   font-size: 36px;
+}
+#msg-box1-27 H3 {
+  text-align: left;
 }
 #msg-box2-26 .mbr-section-title {
   color: #fff;

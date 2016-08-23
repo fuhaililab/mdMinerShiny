@@ -292,7 +292,7 @@
                     var target = e.target;
                     do {
                         if (target.hash){
-                            var useBody = /#bottom|#top/g.test(target.hash);
+                                var useBody = /#bottom|#top/g.test(target.hash);
                             $(useBody ? 'body' : target.hash).each(function(){
                                 e.preventDefault();
                                 // in css sticky navbar has height 64px
@@ -300,6 +300,8 @@
                                 var goTo = target.hash == '#bottom'
                                         ? ($(this).height() - $(window).height())
                                         : ($(this).offset().top - stickyMenuHeight);
+                                //Disable Accordion's and Tab's scroll
+                                if($(this).hasClass('panel-collapse') || $(this).hasClass('tab-pane')){return};
                                 $('html, body').stop().animate({
                                     scrollTop: goTo
                                 }, 800, 'easeInOutCubic');
@@ -376,7 +378,7 @@
             else if ($('input[name=animation]').length) {
 
                 var animatedElements = $('p, h1, h2, h3, h4, h5, a, button, small, img, li, blockquote, .mbr-author-name, em, label, input, textarea, .input-group, .iconbox, .btn-social, .mbr-figure, .mbr-gallery, .mbr-slider, .mbr-map, .mbr-testimonial .card-block, .mbr-price-value, .mbr-price-figure').not(function(){
-                    return $(this).parents().is('.navbar, .mbr-arrow, footer, .iconbox, .mbr-slider, .mbr-gallery, .mbr-testimonial .card-block, #cookiesdirective');
+                    return $(this).parents().is('.navbar, .mbr-arrow, footer, .iconbox, .mbr-slider, .mbr-gallery, .mbr-testimonial .card-block, #cookiesdirective, .mbr-wowslider, .accordion, .tab-content');
                 });
 
                 animatedElements.addClass("hidden").viewportChecker({
