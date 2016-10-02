@@ -299,7 +299,7 @@ shinyServer(function(input, output) {
 	})
 
 	output$table <- DT::renderDataTable(networkAndDrugScore()$drugAndScore, server = FALSE, selection = 'single', 
-	         options = list(pageLength = 5))
+	         options = list(pageLength = 25))
 	
 	output$downloadData <-  downloadHandler(
 		filename = function() {paste("Top Drugs", ".csv", sep="")},

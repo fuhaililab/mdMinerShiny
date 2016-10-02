@@ -6,7 +6,20 @@
     "name": "MDMiner",
     "theme": {
       "name": "mobirise3",
-      "title": "Mobirise 3"
+      "title": "Mobirise 3",
+      "styling": {
+        "primaryColor": "#c0a375",
+        "secondaryColor": "#bfcecb",
+        "successColor": "#90a878",
+        "infoColor": "#7e9b9f",
+        "warningColor": "#f3c649",
+        "dangerColor": "#f28281",
+        "titleFont": "Montserrat",
+        "subtitleFont": "Lora",
+        "textFont": "Raleway",
+        "isRoundedButtons": false,
+        "isAnimatedOnScroll": true
+      }
     },
     "scrollAnimation": "true",
     "publishType": "local",
@@ -44,10 +57,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1rem"
+              "font-size": "1.15rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.083rem"
+              "font-size": "1.245rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -79,7 +92,7 @@
           "_anchor": "menu-8",
           "_params": {
             "bgColor": "#000000",
-            "fontSize": "1",
+            "fontSize": "1.15",
             "fontName": {
               "name": "Open Sans",
               "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,300,700",
@@ -119,12 +132,21 @@
         },
         {
           "_name": "header1",
-          "_anchor": "header1-9",
+          "_styles": {
+            ".mbr-section-title": {
+              "text-align": "left"
+            },
+            ".mbr-section-lead": {
+              "font-size": "24px",
+              "text-align": "center"
+            }
+          },
+          "_anchor": "header1-0",
           "_params": {
             "parallax": true,
             "bgImageRadio": true,
             "showArrow": true,
-            "bgImage": "@PROJECT_PATH@/assets/images/phone-1052023-1920-1920x1440-26-2000x1500-30-2000x1500-32.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/dna-163466-960-720-2000x1125-14.jpg",
             "bgColor": "#a07e49",
             "bgColorRadio": false,
             "bgVideo": {
@@ -139,17 +161,9 @@
             "showText": true,
             "showButtons": false
           },
-          "title": "<br><div>Three Sigma Medicine</div>",
-          "text": "We use new computing technology to find precision medicine to treat each individual cancer patients<br>",
-          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-lg btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">DOWNLOAD FOR WINDOWS</a> <a data-app-btn=\"true\" class=\"btn btn-lg btn-white btn-white-outline\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">DOWNLOAD FOR MAC</a>",
-          "_styles": {
-            "P": {
-              "text-align": "left"
-            },
-            "DIV": {
-              "text-align": "left"
-            }
-          }
+          "title": "Three Sigma Medicine",
+          "text": "In Three Sigma Lab, we use new computing technology to find precision medicine for each individual cancer patients.<br>",
+          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-lg btn-primary\" href=\"https://mobirise.com\">DOWNLOAD FOR WINDOWS</a> <a data-app-btn=\"true\" class=\"btn btn-lg btn-white btn-white-outline\" href=\"https://mobirise.com\">DOWNLOAD FOR MAC</a>"
         },
         {
           "_name": "msg-box5",
@@ -158,13 +172,14 @@
               "text-align": "left"
             },
             "H3": {
-              "text-align": "left"
+              "text-align": "left",
+              "font-size": "36px"
             }
           },
           "_anchor": "msg-box5-44",
           "_params": {
             "paddingTop": 0,
-            "paddingBottom": 0,
+            "paddingBottom": "0",
             "parallax": true,
             "bgImageRadio": false,
             "bgImage": "@THEME_PATH@/components/_images/jumbotron.jpg",
@@ -211,7 +226,8 @@
               "text-align": "left"
             },
             "H3": {
-              "text-align": "left"
+              "text-align": "left",
+              "font-size": "10px"
             }
           },
           "_anchor": "header2-10",
@@ -226,8 +242,8 @@
             },
             "bgVideoRadio": false,
             "overlay": true,
-            "overlayOpacity": 0.3,
-            "overlayColor": "#000",
+            "overlayOpacity": "0.2",
+            "overlayColor": "#000000",
             "inverse": false,
             "showTitle": true,
             "showText": true,
@@ -272,10 +288,14 @@
             },
             "SMALL": {
               "text-align": "center"
+            },
+            ".form-control-label": {
+              "color": "#232323"
             }
           },
           "_anchor": "form1-11",
           "_params": {
+            "labelsColor": "#232323",
             "paddingTop": 3,
             "paddingBottom": 3,
             "bgImageRadio": false,
@@ -391,10 +411,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1rem"
+              "font-size": "1.15rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.083rem"
+              "font-size": "1.245rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -426,7 +446,7 @@
           "_anchor": "menu-8",
           "_params": {
             "bgColor": "#000000",
-            "fontSize": "1",
+            "fontSize": "1.15",
             "fontName": {
               "name": "Open Sans",
               "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,300,700",
@@ -483,7 +503,7 @@
             "paddingBottom": 3,
             "bgImageRadio": true,
             "parallax": true,
-            "bgImage": "@PROJECT_PATH@/assets/images/desert2-2000x1081-59.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/desert-2000x1367-68.jpg",
             "bgColor": "#fff",
             "bgColorRadio": false,
             "bgVideo": {
@@ -501,6 +521,11 @@
         },
         {
           "_name": "features3",
+          "_styles": {
+            "P": {
+              "text-align": "center"
+            }
+          },
           "_anchor": "features3-19",
           "_params": {
             "paddingTop": "1",
@@ -603,12 +628,7 @@
           "title6": "Host Anywhere",
           "subtitle6": "Don't limit yourself to just one platform",
           "caption6": "Publish your website to a local drive, FTP or host on Amazon S3, Google Drive, Github. Don't limit yourself to just one platform or service provider.",
-          "button6": "<a data-app-btn=\"true\" href=\"https://mobirise.com\" class=\"btn btn-primary\">MORE</a>",
-          "_styles": {
-            "P": {
-              "text-align": "center"
-            }
-          }
+          "button6": "<a data-app-btn=\"true\" href=\"https://mobirise.com\" class=\"btn btn-primary\">MORE</a>"
         },
         {
           "_name": "contacts2",
@@ -681,10 +701,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1rem"
+              "font-size": "1.15rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.083rem"
+              "font-size": "1.245rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -716,7 +736,7 @@
           "_anchor": "menu-12",
           "_params": {
             "bgColor": "#000000",
-            "fontSize": "1",
+            "fontSize": "1.15",
             "fontName": {
               "name": "Open Sans",
               "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,300,700",
@@ -879,7 +899,7 @@
             "paddingBottom": 3,
             "bgImageRadio": true,
             "parallax": true,
-            "bgImage": "@THEME_PATH@/components/_images/desert2.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/desert-2000x1367-99.jpg",
             "bgColor": "#fff",
             "bgColorRadio": false,
             "bgVideo": {
@@ -981,10 +1001,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1rem"
+              "font-size": "1.15rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.083rem"
+              "font-size": "1.245rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -1016,7 +1036,7 @@
           "_anchor": "menu-37",
           "_params": {
             "bgColor": "#000000",
-            "fontSize": "1",
+            "fontSize": "1.15",
             "fontName": {
               "name": "Open Sans",
               "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,300,700",
@@ -1100,6 +1120,14 @@
         },
         {
           "_name": "msg-box1",
+          "_styles": {
+            "H3": {
+              "text-align": "left"
+            },
+            "H2": {
+              "font-size": "13px"
+            }
+          },
           "_anchor": "msg-box1-27",
           "_params": {
             "paddingTop": 3,
@@ -1123,12 +1151,7 @@
           },
           "button": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">Read More</a>",
           "text": "Create awesome mobile-friendly websites. No coding and free.",
-          "title": "PRE MADE BLOCKS",
-          "_styles": {
-            "H3": {
-              "text-align": "left"
-            }
-          }
+          "title": "PRE MADE BLOCKS"
         },
         {
           "_styles": {
@@ -1161,7 +1184,7 @@
             "showTitle": true,
             "showText": true
           },
-          "button": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\">VIEW VIDEO TUTORIAL</a>",
+          "button": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">VIEW VIDEO TUTORIAL</a>",
           "title": "TRENDY WEBSITE BLOCKS",
           "text": "Cut down the development time with drag-and-drop website builder."
         },
@@ -1276,10 +1299,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1rem"
+              "font-size": "1.15rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.083rem"
+              "font-size": "1.245rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -1311,7 +1334,7 @@
           "_anchor": "menu-31",
           "_params": {
             "bgColor": "#000000",
-            "fontSize": "1",
+            "fontSize": "1.15",
             "fontName": {
               "name": "Open Sans",
               "url": "https://fonts.googleapis.com/css?family=Open+Sans:400,300,700",
