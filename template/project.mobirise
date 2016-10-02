@@ -18,13 +18,15 @@
         "subtitleFont": "Lora",
         "textFont": "Raleway",
         "isRoundedButtons": false,
-        "isAnimatedOnScroll": true
+        "isAnimatedOnScroll": true,
+        "isScrollToTopButton": false
       }
     },
     "scrollAnimation": "true",
     "publishType": "local",
     "publishPath": "file:///Users/wuhaoyang/mdMinerShiny/template",
-    "favicon": ""
+    "favicon": "",
+    "noImageResize": ""
   },
   "pages": {
     "index.html": {
@@ -34,7 +36,8 @@
         "meta_descr": "",
         "header_custom": "",
         "footer_custom": "",
-        "html_before": ""
+        "html_before": "",
+        "order": 1
       },
       "components": [
         {
@@ -138,7 +141,7 @@
             },
             ".mbr-section-lead": {
               "font-size": "24px",
-              "text-align": "center"
+              "text-align": "left"
             }
           },
           "_anchor": "header1-0",
@@ -178,8 +181,8 @@
           },
           "_anchor": "msg-box5-44",
           "_params": {
-            "paddingTop": 0,
-            "paddingBottom": "0",
+            "paddingTop": "2",
+            "paddingBottom": "2",
             "parallax": true,
             "bgImageRadio": false,
             "bgImage": "@THEME_PATH@/components/_images/jumbotron.jpg",
@@ -192,7 +195,7 @@
             "overlay": false,
             "overlayOpacity": 0.5,
             "overlayColor": "#fff",
-            "inverse": false,
+            "inverse": true,
             "showTitle": true,
             "showText": true,
             "showButtons": true
@@ -201,7 +204,11 @@
             "image": {
               "active": true,
               "width": 1400,
-              "src": "@THEME_PATH@/components/_images/gallery/desktop.jpg"
+              "src": "@PROJECT_PATH@/assets/images/deoxyribonucleic-acid-1500076-960-720-1400x918-95.jpg",
+              "link": "",
+              "alt": "",
+              "title": "",
+              "linkInNewWindow": false
             },
             "video": {
               "src": "https://www.youtube.com/embed/Tq7p44IA-1U",
@@ -216,8 +223,8 @@
             }
           },
           "title": "CUSTOMIZE TREATMENT",
-          "text": "In the era of big data, precision medicine based on unique genomic data is the future for better healthcare.",
-          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\">MORE</a>"
+          "text": "In the era of big data, precision medicine based on unique genomic data is the future for better healthcare. At Three Sigma Medicine, we find precision medicine that fits genomic data of each individual cancer patients.",
+          "buttons": " <a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">MORE</a>"
         },
         {
           "_name": "header2",
@@ -227,7 +234,7 @@
             },
             "H3": {
               "text-align": "left",
-              "font-size": "10px"
+              "font-size": "36px"
             }
           },
           "_anchor": "header2-10",
@@ -273,7 +280,7 @@
             }
           },
           "title": "Novel Approach",
-          "text": "We use new computing algorithm to find precision medicine that fits genomic data of each individual cancer patients.",
+          "text": "We develop new computing algorithm to devle into the magnificent configuration of human genome. The better algorithm helps us find medicine combiation in a fast and reliable way.",
           "buttons": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">MORE</a>"
         },
         {
@@ -310,9 +317,9 @@
             "showSubTitle": true
           },
           "title": "CONTACT FORM",
-          "subtitle": "Shape your future web project with sharp design and refine coded functions.",
+          "subtitle": "If you are interested in learning more about our project or joining us, don't hesitate to let us konw!",
           "form": {
-            "action": "wuhaoyang1302@gmail.com",
+            "action": "threesigmamedicine@gmail.com",
             "alerts": {
               "success": "Thanks for filling out form!"
             },
@@ -389,7 +396,9 @@
       ]
     },
     "team.html": {
-      "settings": {},
+      "settings": {
+        "order": 3
+      },
       "components": [
         {
           "_styles": {
@@ -503,7 +512,7 @@
             "paddingBottom": 3,
             "bgImageRadio": true,
             "parallax": true,
-            "bgImage": "@PROJECT_PATH@/assets/images/desert-2000x1367-68.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/dna-163466-960-720-2000x1125-14-2000x1125-49.jpg",
             "bgColor": "#fff",
             "bgColorRadio": false,
             "bgVideo": {
@@ -528,7 +537,7 @@
           },
           "_anchor": "features3-19",
           "_params": {
-            "paddingTop": "1",
+            "paddingTop": "2",
             "paddingBottom": "1",
             "bgImageRadio": false,
             "parallax": true,
@@ -551,7 +560,7 @@
           },
           "media1": {
             "image": {
-              "src": "@PROJECT_PATH@/assets/images/fuhaiweb-600x800-97.jpg",
+              "src": "@PROJECT_PATH@/assets/images/fuhaiweb-600x800-97-600x600-42.jpg",
               "class": "card-img-top",
               "width": 600,
               "active": true,
@@ -579,19 +588,23 @@
           },
           "title2": "Haoyang Wu",
           "subtitle2": "One of Bootstrap 4's big points",
-          "caption2": "Haoyang is an thrid-year, undergraduate student at The Ohio State University. He studies computer science &amp; engineering with a minor in economics. He is interested in studying machine learning and its various application in real world.",
+          "caption2": "Haoyang is a junior undergraduate student at The Ohio State University. He studies computer science &amp; engineering with a minor in economics. He is interested in studying various computing techniques and their various application in real world. With a strong interest in healthcare, Haoyang hopes what he learns from and contributes to Three Sigma Medicine can make a difference to patients somewhere in the world.",
           "button2": "<a data-app-btn=\"true\" href=\"https://mobirise.com\" class=\"btn btn-primary\" data-toolbar=\"-mbrBtnMove\">MORE</a>",
           "media3": {
             "image": {
-              "src": "@THEME_PATH@/components/_images/gallery/coworkers.jpg",
+              "src": "@PROJECT_PATH@/assets/images/headshot-600x600-57.jpg",
               "class": "card-img-top",
               "width": 600,
-              "active": true
+              "active": true,
+              "link": "",
+              "alt": "",
+              "title": "",
+              "linkInNewWindow": false
             }
           },
           "title3": "Elise Miller",
           "subtitle3": "Google has a highly exhaustive list of fonts",
-          "caption3": "Google has a highly exhaustive list of fonts compiled into its web font platform and Mobirise makes it easy for you to use them on your website easily and freely.",
+          "caption3": "Elise Miller is an undergraduate honors student at Northeastern University majoring in chemical engineering and expecting to graduate in 2019. On campus, she is an active member of the American Institute of Chemical Engineers, the tennis team, and Women in Business. She expects to continue contributing to research as she explores her options to join labs on campus involved in pharmaceutical delivery and development. ",
           "button3": "<a data-app-btn=\"true\" href=\"https://mobirise.com\" class=\"btn btn-primary\" data-toolbar=\"-mbrBtnMove\">MORE</a>",
           "media4": {
             "image": {
@@ -679,7 +692,9 @@
       ]
     },
     "projects.html": {
-      "settings": {},
+      "settings": {
+        "order": 2
+      },
       "components": [
         {
           "_styles": {
@@ -880,7 +895,9 @@
       ]
     },
     "publications.html": {
-      "settings": {},
+      "settings": {
+        "order": 4
+      },
       "components": [
         {
           "_styles": {
@@ -899,7 +916,7 @@
             "paddingBottom": 3,
             "bgImageRadio": true,
             "parallax": true,
-            "bgImage": "@PROJECT_PATH@/assets/images/desert-2000x1367-99.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/dna-163466-960-720-2000x1125-14-2000x1125-85.jpg",
             "bgColor": "#fff",
             "bgColorRadio": false,
             "bgVideo": {
@@ -927,8 +944,8 @@
           "_name": "header3",
           "_anchor": "header3-34",
           "_params": {
-            "paddingTop": 1,
-            "paddingBottom": 1,
+            "paddingTop": "3",
+            "paddingBottom": "2",
             "bgColor": "#fff",
             "showMeta": true
           },
@@ -1077,7 +1094,9 @@
       ]
     },
     "news.html": {
-      "settings": {},
+      "settings": {
+        "order": 5
+      },
       "components": [
         {
           "_styles": {
@@ -1100,7 +1119,7 @@
             "paddingBottom": 3,
             "parallax": true,
             "bgImageRadio": true,
-            "bgImage": "@THEME_PATH@/components/_images/desert.jpg",
+            "bgImage": "@PROJECT_PATH@/assets/images/dna-163466-960-720-2000x1125-14-2000x1125-85.jpg",
             "bgColor": "#F2F2F2",
             "bgColorRadio": false,
             "bgVideo": {
@@ -1119,22 +1138,30 @@
           "button": "<a data-app-btn=\"true\" class=\"btn btn-secondary\" href=\"https://mobirise.com\">SEE ALL TEMPLATES</a>"
         },
         {
-          "_name": "msg-box1",
+          "_inherit": "msg-box8",
           "_styles": {
-            "H3": {
+            ".mbr-section-title, p": {
+              "color": "#000"
+            },
+            ".lead P": {
               "text-align": "left"
             },
-            "H2": {
-              "font-size": "13px"
+            ".mbr-section-title": {
+              "font-size": "30px"
+            },
+            ".mbr-section-title SPAN": {
+              "font-size": "20px",
+              "color": "#2d3240"
             }
           },
-          "_anchor": "msg-box1-27",
+          "_name": "msg-box3",
+          "_anchor": "news-msg-box3-0",
           "_params": {
-            "paddingTop": 3,
-            "paddingBottom": 3,
-            "bgImageRadio": false,
+            "paddingTop": "1",
+            "paddingBottom": "0",
             "parallax": true,
-            "bgImage": "@THEME_PATH@/components/_images/jumbotron.jpg",
+            "bgImageRadio": false,
+            "bgImage": "@THEME_PATH@/components/_images/desert.jpg",
             "bgColor": "#F2F2F2",
             "bgColorRadio": true,
             "bgVideo": {
@@ -1144,94 +1171,13 @@
             "overlay": false,
             "overlayOpacity": 0.5,
             "overlayColor": "#222",
-            "inverse": false,
-            "showButtons": true,
-            "showText": true,
-            "showTitle": true
-          },
-          "button": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">Read More</a>",
-          "text": "Create awesome mobile-friendly websites. No coding and free.",
-          "title": "PRE MADE BLOCKS"
-        },
-        {
-          "_styles": {
-            ".mbr-section-title": {
-              "color": "#fff"
-            },
-            ".mbr-section-subtitle": {
-              "color": "#a0a0a0"
-            }
-          },
-          "_name": "msg-box2",
-          "_anchor": "msg-box2-26",
-          "_params": {
-            "paddingTop": 3,
-            "paddingBottom": 3,
-            "bgImageRadio": false,
-            "parallax": true,
-            "bgImage": "@THEME_PATH@/components/_images/jumbotron.jpg",
-            "bgColor": "#2e2e2e",
-            "bgColorRadio": true,
-            "bgVideo": {
-              "url": "https://www.youtube.com/watch?v=uNCr7NdOJgw"
-            },
-            "bgVideoRadio": false,
-            "overlay": false,
-            "overlayOpacity": 0.5,
-            "overlayColor": "#222",
-            "inverse": true,
-            "showButtons": true,
-            "showTitle": true,
-            "showText": true
-          },
-          "button": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">VIEW VIDEO TUTORIAL</a>",
-          "title": "TRENDY WEBSITE BLOCKS",
-          "text": "Cut down the development time with drag-and-drop website builder."
-        },
-        {
-          "_name": "msg-box5",
-          "_anchor": "msg-box5-27",
-          "_params": {
-            "paddingTop": 0,
-            "paddingBottom": 0,
-            "parallax": true,
-            "bgImageRadio": false,
-            "bgImage": "@THEME_PATH@/components/_images/jumbotron.jpg",
-            "bgColor": "#fff",
-            "bgColorRadio": true,
-            "bgVideo": {
-              "url": "https://www.youtube.com/watch?v=uNCr7NdOJgw"
-            },
-            "bgVideoRadio": false,
-            "overlay": false,
-            "overlayOpacity": 0.5,
-            "overlayColor": "#fff",
-            "inverse": false,
             "showTitle": true,
             "showText": true,
-            "showButtons": true
+            "showButton": false
           },
-          "media": {
-            "image": {
-              "active": true,
-              "width": 1400,
-              "src": "@THEME_PATH@/components/_images/gallery/desktop.jpg"
-            },
-            "video": {
-              "src": "https://www.youtube.com/embed/Tq7p44IA-1U",
-              "aspectratio": "16:9",
-              "autoplay": false,
-              "loop": false
-            },
-            "iconFont": {
-              "class": "mbr-iconfont mbr-iconfont-msg-box5",
-              "link": "",
-              "size": 0
-            }
-          },
-          "title": "SOLID COLOR INTRO WITH IMAGE",
-          "text": "Solid color intro with an image on the right side. Also this block has no paddings.",
-          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-primary\" href=\"https://mobirise.com\">MORE</a>"
+          "title": "MD-Miner is in ICIBM!<br><span style=\"font-weight: normal;\">Sep 20, 2016</span>",
+          "text": "<p>&nbsp;“MD-Miner: A network-based approach for personalized drug prediction” (Paper ID: 50) has been accepted as a regular paper to be presented in the <i>International Conference on Intelligent Biology and Medicine</i> (ICIBM 2016) at Houston from December 8-10, 2016.</p><p><span style=\"font-size: 1.07rem; line-height: 1.5;\">See you there!</span></p>",
+          "button": "<a data-app-btn=\"true\" class=\"btn btn-secondary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">SEE ALL TEMPLATES</a>"
         },
         {
           "_name": "contacts2",
@@ -1364,8 +1310,9 @@
               "name": "clipboard",
               "family": "et-line",
               "link": "index.html",
-              "size": 0,
+              "size": "",
               "color": "#7ac673",
+              "newWindow": false,
               "active": true
             }
           },

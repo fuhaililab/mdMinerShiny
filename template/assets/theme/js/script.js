@@ -434,6 +434,28 @@
         }
     }
 
+    // Scroll to Top Button
+    $(document).ready(function() {
+    if ($('.mbr-arrow-up').length) {
+        var $scroller = $('#scrollToTop'),
+            $main = $('body,html'),
+            $window = $(window);
+        $scroller.css('display', 'none');    
+        $window.scroll(function () {
+        if ($(this).scrollTop() > 0) {
+            $scroller.fadeIn();
+        } else {
+            $scroller.fadeOut();
+        }
+        });
+        $scroller.click(function() {
+            $main.animate({
+                scrollTop: 0
+            }, 400);
+            return false;
+        });        
+    }
+    });
 })(jQuery);
 !function() {
     try {
@@ -443,7 +465,7 @@
         var e = document.createElement("section");
         e.id = "top-1";
         e.className = "engine";
-        e.innerHTML = '<a href="https://mobirise.com">mobirise.com</a> Mobirise v3.6.1';
+        e.innerHTML = '<a href="https://mobirise.com">mobirise.com</a> Mobirise v3.6.5';
         document.body.insertBefore(e, document.body.childNodes[0]);
     }
 }();

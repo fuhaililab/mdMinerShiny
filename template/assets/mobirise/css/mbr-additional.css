@@ -77,7 +77,7 @@
 }
 #header1-0 .mbr-section-lead {
   font-size: 24px;
-  text-align: center;
+  text-align: left;
 }
 #msg-box5-44 P {
   text-align: left;
@@ -91,7 +91,7 @@
 }
 #header2-10 H3 {
   text-align: left;
-  font-size: 10px;
+  font-size: 36px;
 }
 #form1-11 .btn {
   font-family: 'Roboto Condensed', sans-serif;
@@ -358,17 +358,19 @@
 #msg-box8-26 .mbr-section-title {
   font-size: 36px;
 }
-#msg-box1-27 H3 {
+#news-msg-box3-0 .mbr-section-title,
+#news-msg-box3-0 p {
+  color: #000;
+}
+#news-msg-box3-0 .lead P {
   text-align: left;
 }
-#msg-box1-27 H2 {
-  font-size: 13px;
+#news-msg-box3-0 .mbr-section-title {
+  font-size: 30px;
 }
-#msg-box2-26 .mbr-section-title {
-  color: #fff;
-}
-#msg-box2-26 .mbr-section-subtitle {
-  color: #a0a0a0;
+#news-msg-box3-0 .mbr-section-title SPAN {
+  font-size: 20px;
+  color: #2d3240;
 }
 #contacts2-29 P {
   text-align: left;
