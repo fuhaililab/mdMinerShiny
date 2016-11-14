@@ -421,10 +421,10 @@
               "font-family": "'Open Sans', sans-serif"
             },
             ".link": {
-              "font-size": "1.25rem"
+              "font-size": "1rem"
             },
             ".dropdown-item, .nav-dropdown-sm .link": {
-              "font-size": "1.354rem"
+              "font-size": "1.083rem"
             },
             ".link:hover, .dropdown-item:hover, .link:focus, .dropdown-item:focus": {
               "color": "#c0a375"
@@ -880,7 +880,7 @@
           },
           "title": "MD Miner",
           "text": "Use the most advanced deep-learning algorithm,&nbsp;Mechanism &amp; Drug Miner is the latest application in precision medicine we developed to reposition drugs for each individual cancer patients.<br>",
-          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-success\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">TRY NOW</a> "
+          "buttons": "<a data-app-btn=\"true\" class=\"btn btn-success\" href=\"http://ec2-52-15-128-161.us-east-2.compute.amazonaws.com:3838/mdminer/mdminer/\" data-toolbar=\"-mbrBtnMove\">TRY NOW</a> "
         },
         {
           "_name": "msg-box5",

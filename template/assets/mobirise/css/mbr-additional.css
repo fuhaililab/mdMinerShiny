@@ -535,11 +535,11 @@ h6,
   font-family: 'Open Sans', sans-serif;
 }
 #menu-8 .link {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 #menu-8 .dropdown-item,
 #menu-8 .nav-dropdown-sm .link {
-  font-size: 1.354rem;
+  font-size: 1.083rem;
 }
 #menu-8 .link:hover,
 #menu-8 .dropdown-item:hover,
