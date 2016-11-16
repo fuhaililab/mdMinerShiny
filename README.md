@@ -40,3 +40,10 @@ Click the title of each block to download corresponding data.
 #### For any questions, please contact: robert.fh.li@gmail.com.
 #####- Dr. Fuhai Li - Department of Biomedical Informatics, The Ohio State University.
 
+### **To deploy the app on AWS**
+1) Launch a Ubuntu instance on AWS. Follow instruction: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-launch-instance_linux. 
+When configuring security group, open protocol HTTP and SSH, which opens port 80 and 22 respectively. Set the source of port 22 to your own IP only. Also use Custom TCP RULE to open port 3838 for shiny application. 
+2) Conncet instance using public key provided by Amazon. For detail instruction: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
+3) Install shiny server on your instance. Follow instruction: https://www.rstudio.com/products/shiny/download-server/
+4) Make a directory for your app in /srv/shiny-server. Change the mode of the new folder to 771.
+5) Use scp to transfer your shiny project to the new folder you create under /srv/shiny-server.

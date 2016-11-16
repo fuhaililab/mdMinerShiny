@@ -783,7 +783,10 @@ h6,
   color: #2d3240;
 }
 #news-msg-box3-0 .lead LI {
-  text-align: left;
+  text-align: center;
+}
+#news-msg-box3-0 .lead UL {
+  text-align: center;
 }
 #contacts2-29 P {
   text-align: left;

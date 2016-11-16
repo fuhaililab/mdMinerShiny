@@ -589,7 +589,7 @@
           },
           "title2": "Haoyang Wu",
           "subtitle2": "One of Bootstrap 4's big points",
-          "caption2": "Haoyang is a junior undergraduate student at The Ohio State University. He studies computer science &amp; engineering with a minor in economics. He is interested in studying various computing techniques and their various application in real world. With a strong interest in healthcare, Haoyang hopes what he learns from and contributes to Three Sigma Medicine can make a difference to patients somewhere in the world.",
+          "caption2": "Haoyang is a junior undergraduate student at The Ohio State University, double majoring in computer science and economics. As a member of engineering honor society Tau Beta Pi and the Business Builders Club at OSU, he is also the primary developer of the application MD-Miner and the designer of this website.&nbsp;With a strong interest in computing, he hopes what he learns from and contributes to Three Sigma Medicine can make a difference to patients somewhere in the world.",
           "button2": "<a data-app-btn=\"true\" href=\"https://mobirise.com\" class=\"btn btn-primary\" data-toolbar=\"-mbrBtnMove\">MORE</a>",
           "media3": {
             "image": {
@@ -1245,7 +1245,10 @@
               "color": "#2d3240"
             },
             ".lead LI": {
-              "text-align": "left"
+              "text-align": "center"
+            },
+            ".lead UL": {
+              "text-align": "center"
             }
           },
           "_name": "msg-box3",
@@ -1270,7 +1273,7 @@
             "showButton": false
           },
           "title": "<br>Recent News",
-          "text": "<ol><li style=\"text-align: left;\">&nbsp;A new drug combination manuscript was submitted to AMIA TBI.</li><li style=\"text-align: left;\">“MD-Miner: A network-based approach for personalized drug prediction” (Paper ID: 50) has been accepted as a regular paper to be presented in the International Conference on Intelligent Biology and Medicine (ICIBM 2016) at Houston from December 8-10, 2016. See you there!</li></ol>",
+          "text": "<p></p><ol><li style=\"text-align: left;\">Denethi presented MD-Miner at 2nd International Conference on Respiratory and Pulmonary Medicine  (Oct 18th, 2016).</li><li style=\"text-align: left;\">A new drug combination manuscript was submitted to AMIA TBI.</li><li style=\"text-align: left;\">“MD-Miner: A network-based approach for personalized drug prediction” (Paper ID: 50) has been accepted as a regular paper to be presented in the International Conference on Intelligent Biology and Medicine (ICIBM 2016) at Houston from December 8-10, 2016. See you there!</li></ol><p></p>",
           "button": "<a data-app-btn=\"true\" class=\"btn btn-secondary\" href=\"https://mobirise.com\" data-toolbar=\"-mbrBtnMove\">SEE ALL TEMPLATES</a>"
         },
         {
