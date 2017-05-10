@@ -4,7 +4,7 @@ library(DT)
 
 shiny.maxRequestSize=30*1024^2
 
-source("./pmshiny.R");
+source("./pmShiny.R");
 shinyServer(function(input, output) {
 	# RNASeq <- reactive({
 	# 	result = NULL;
@@ -307,7 +307,15 @@ shinyServer(function(input, output) {
 			write.csv(networkAndDrugScore()$drugAndScore, file, row.names=F)
 		}
 	)
-	
+
+	output$downloadData0 <-  downloadHandler(
+		filename = function() {
+			paste("Demo", ".txt", sep="")},
+		content = function(file) {
+			file.copy("./dataDemo/foldchangePc3.txt", file)
+		}
+	)
+
 	output$downloadData1 <-  downloadHandler(
 	 filename = function() {paste("Patient Drug Merged Network Table", ".csv", sep="")},
 	 content = function(file) {
