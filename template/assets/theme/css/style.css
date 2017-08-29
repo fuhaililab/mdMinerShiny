@@ -1964,6 +1964,23 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 .visible {
   visibility: visible; }
 
+.hamburger-om:after {
+  content: "";
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  position: absolute;
+  top: 8px;
+  left: 0; }
+.hamburger-om:before {
+  content: "";
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  position: absolute;
+  top: -8px;
+  left: 0; }
+
 /*-------
 
    Iconfont
@@ -2077,6 +2094,29 @@ html.is-builder :not([data-app-remove-it]).card-subtitle ~ .card-btn {
   padding-top: 0.3125rem; }
 html.is-builder :not([data-app-remove-it]).card-text + .card-btn {
   padding-top: 1.375rem; }
+html.is-builder .article .lead p {
+  margin-top: 0; }
+html.is-builder .article div .btn {
+  margin-top: 0; }
+html.is-builder .article .mbr-section-title:not([data-app-remove-it]) + .lead p {
+  margin-top: 1.5625rem; }
+html.is-builder .article .mbr-section-title:not([data-app-remove-it]) ~ div .btn {
+  margin-top: 2.3125rem; }
+html.is-builder .article .lead:not([data-app-remove-it]) + div .btn {
+  margin-top: 2.3125rem; }
+
+.article .display-2 {
+  margin-bottom: 0; }
+.article .mbr-section-title + .mbr-section-subtitle {
+  margin-top: 4px; }
+.article .mbr-section-title + .lead p {
+  margin-top: 1.5625rem; }
+.article .mbr-section-title + div .btn {
+  margin-top: 2.3125rem; }
+.article .lead + div .btn {
+  margin-top: 2.3125rem; }
+.article .mbr-section-subtitle {
+  margin-bottom: 0; }
 
 /*# sourceMappingURL=style.css.map */
 .engine {

@@ -659,6 +659,9 @@ h6,
 #projects-header1-0 .mbr-section-title {
   font-size: 60px;
 }
+#projects-header1-0 .mbr-section-lead {
+  text-align: center;
+}
 #projects-msg-box5-0 P {
   text-align: left;
 }
@@ -852,4 +855,10 @@ h6,
 #menu-31 .link[aria-expanded="true"],
 #menu-31 .dropdown-item[aria-expanded="true"] {
   color: #c0a375!important;
+}
+#header5-3 .mbr-section-title {
+  color: #000;
+}
+#header5-3 .mbr-section-lead {
+  color: #9c9a9a;
 }
