@@ -53,7 +53,7 @@ shinyServer(function(input, output) {
 	# )
 
 	networkAndDrugScore <- reactive({
-	  withProgress(message = 'Configuring Drug Table', {
+	  withProgress(message = 'Calculating drug scores...', {
 	    n=5
 	    for (j in 1:n) {
 	    inFile <- input$file1
@@ -317,25 +317,25 @@ shinyServer(function(input, output) {
 	)
 
 	output$downloadData1 <-  downloadHandler(
-	 filename = function() {paste("Patient Drug Merged Network Table", ".csv", sep="")},
+	 filename = function() {paste("Pnet", ".csv", sep="")},
 	 content = function(file) {
 	   write.csv(networkAndDrugScore()$network, file, row.names=F)
 	 }
 	)
 	
 	output$downloadData2 <-  downloadHandler(
-	  filename = function() {paste("Patient Network Table", ".csv", sep="")},
+	  filename = function() {paste("MoAnet for ", drugNameAndNetwork()$drugName, ".csv", sep="")},
 	  content = function(file) {
-	    write.csv(networkAndDrugScore()$network, file, row.names=F)
+	    write.csv(drugNameAndNetwork()$drugNetwork, file, row.names=F)
 	  }
 	)
 	
 	output$downloadData3 <-  downloadHandler(
 		filename = function() {
-			paste("Drug Network Table for ", drugNameAndNetwork()$drugName, ".csv", sep="")
+			paste("Merged Network with ", drugNameAndNetwork()$drugName, ".csv", sep="")
 		},
 		content = function(file) {
-   			write.csv(drugNameAndNetwork()$drugNetwork, file, row.names=F);
+   			write.csv(networkAndDrugScore()$network, file, row.names=F);
 	 	}
 	)
 	
